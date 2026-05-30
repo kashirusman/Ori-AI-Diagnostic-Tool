@@ -1,0 +1,6 @@
+{
+  "name": "My AI Quest",
+  "description": "Navigate high-altitude strategic milestones, bypass corporate inefficiencies, and deploy a custom 30-day AI Integration Roadmap tailored for humanitarian, enterprise, and energy industry domains.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
