@@ -163,6 +163,12 @@
   @keyframes foot-swing-r { 0% { transform: translateX(6px) translateY(-3px) rotate(15deg); } 100% { transform: translateX(-6px) translateY(1px) rotate(-15deg); } }
   @keyframes run-bob { 0% { transform: translateY(0) rotate(1deg); } 100% { transform: translateY(-4px) rotate(4deg); } }
 
+  @keyframes bobbing {
+    0% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
+    50% { transform: translateY(-6px) rotate(1.5deg) scale(1.02); }
+    100% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
+  }
+
   .gudu-jump #gudu-lfoot, .gudu-jump #gudu-rfoot { transform: translateY(2px) rotate(8deg); }
   .gudu-jump .gudu-main-rig { transform: translateY(-2px) scaleY(1.05) rotate(6deg); }
 
@@ -172,7 +178,7 @@
   /* WELCOME SCREEN */
   .welcome-screen {
     padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background: linear-gradient(180deg, #040814 0%, #090e1f 100%); text-align: center;
+    background: radial-gradient(circle at center, #0b152d 0%, #03060f 100%); text-align: center;
   }
   .logo-box {
     width: 68px; height: 68px; display: flex; align-items: center; justify-content: center;
@@ -210,8 +216,9 @@
   
   .card-box {
     width: 100%; max-width: 440px; background: var(--navy-card); border: 2px solid rgba(255,255,255,0.12);
-    border-radius: 24px; padding: 36px 32px; text-align: center;
+    border-radius: 24px; padding: 24px 20px; text-align: center;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7); display: flex; flex-direction: column; align-items: center;
+    max-height: 90vh; overflow-y: auto;
   }
 
   .glow-ring {
@@ -531,6 +538,124 @@
   /* JUMP TAP SCREEN REMINDER */
   .tap-overlay-tip { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700; tracking: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); pointer-events: none; }
 
+  /* FULL IMMERSION FOR CLIMBER */
+  #scStageGrid .game-stage {
+    height: 100% !important;
+  }
+
+  /* AUTOMATIC LANDSCAPE & SHORT SCREEN OPTIMIZATIONS */
+  @media (max-height: 540px) or (orientation: landscape) and (max-height: 600px) {
+    /* Welcome screen compact layout */
+    .welcome-screen {
+      padding: 12px !important;
+      justify-content: flex-start !important;
+      overflow-y: auto !important;
+    }
+    .welcome-screen .logo-box {
+      display: none !important;
+    }
+    .welcome-screen h1 {
+      font-size: 22px !important;
+      margin-bottom: 4px !important;
+    }
+    .welcome-screen p {
+      font-size: 9px !important;
+    }
+    .welcome-screen .input-group {
+      margin-bottom: 8px !important;
+    }
+    .welcome-screen .btn-input {
+      height: 40px !important;
+      font-size: 13px !important;
+    }
+    .welcome-screen .action-btn {
+      height: 42px !important;
+      font-size: 13px !important;
+    }
+    .welcome-screen div[style*="max-width: 440px"] {
+      margin-bottom: 10px !important;
+      padding: 8px 12px !important;
+    }
+    .welcome-screen div[style*="width: 60px"] {
+      width: 40px !important;
+      height: 40px !important;
+    }
+
+    /* Game HUD layout in compact landscape mode */
+    .hud {
+      top: 8px !important;
+      left: 8px !important;
+      right: 8px !important;
+      padding: 6px 10px !important;
+    }
+    .prog-timeline {
+      top: 56px !important;
+      left: 8px !important;
+      right: 8px !important;
+      height: 4px !important;
+    }
+
+    /* Intermission compact adjustments */
+    .intermission {
+      padding: 10px 14px !important;
+      justify-content: flex-start !important;
+      overflow-y: auto !important;
+    }
+    .intermission h2 {
+      font-size: 18px !important;
+    }
+    .intermission div[style*="margin-bottom: 16px"] {
+      margin-bottom: 8px !important;
+      padding: 6px 10px !important;
+    }
+    .intermission .npc-quote {
+      margin-bottom: 8px !important;
+    }
+    .intermission .action-btn {
+      height: 40px !important;
+      font-size: 13px !important;
+    }
+
+    /* Full-screen quiz compact adjustments on mobile horizontal */
+    .bottom-sheet {
+      padding: 10px !important;
+    }
+    .bottom-sheet h2 {
+      font-size: 18px !important;
+    }
+    .bottom-sheet #bsSubtitle {
+      font-size: 9px !important;
+    }
+    .bottom-sheet #bsNpcLine {
+      font-size: 10px !important;
+      margin-bottom: 6px !important;
+    }
+    .bottom-sheet .bs-body {
+      gap: 6px !important;
+    }
+    .bottom-sheet .large-tile {
+      padding: 8px 12px !important;
+      border-radius: 10px !important;
+    }
+    .bottom-sheet .large-tile h4 {
+      font-size: 12px !important;
+    }
+    .bottom-sheet .large-tile p {
+      font-size: 10px !important;
+      display: none !important; /* hide extra text description on very low height to preserve choices clickable area */
+    }
+    #quizOriPanel {
+      padding: 8px !important;
+    }
+    #quizOriPanel div[style*="width: 70px"] {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    #quizOriAdvice {
+      font-size: 12px !important;
+    }
+  }
+
   /* PRINT STYLE STACK override */
   @media print {
     body { background: #fff !important; color: #000 !important; }
@@ -565,58 +690,73 @@
 
   <!-- WELCOME REGISTRATION -->
   <div class="screen active welcome-screen" id="scWelcome" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
-    <div class="logo-box" style="margin-bottom: 8px;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" style="width:36px; height:36px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    </div>
-    <p style="font-size:10px; color:var(--sky-glow); margin-bottom:8px; font-weight:900; letter-spacing:1.5px; text-transform:uppercase; text-align:center;">🏢 SECTOR ALIGNMENT: ENTERPRISE & TECHNOLOGY</p>
-    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 950; letter-spacing: -1px; text-shadow: 0 0 15px rgba(56, 189, 248, 0.3); color: #fff; margin-bottom: 12px; text-align: center;">My AI Quest</h1>
     
-    <!-- Cute Welcoming Gudu speech panel! -->
-    <div style="display: flex; align-items: center; gap: 14px; background: rgba(56, 189, 248, 0.05); border: 1.5px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 12px 16px; margin-bottom: 18px; max-width: 440px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); width: 100%;">
-      <!-- Super cute bouncing Gudu character -->
-      <div style="width: 60px; height: 60px; flex-shrink: 0; animation: bobbing 0.8s infinite alternate ease-in-out;">
-        <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
-          <defs>
-            <radialGradient id="cuteFluffGradWelcome" cx="45%" cy="35%" r="55%" fx="30%" fy="30%">
-              <stop offset="0%" stop-color="#fffbeb" />
-              <stop offset="35%" stop-color="#fef08a" />
-              <stop offset="85%" stop-color="#facc15" />
-              <stop offset="100%" stop-color="#eab308" />
-            </radialGradient>
-          </defs>
-          <!-- Twin sprout leaves on top -->
-          <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
-          <path d="M 51,23 Q 61,15 53,10 Q 47,16 50,23 Z" fill="#4ade80" stroke="#166534" stroke-width="1" />
-          
-          <!-- Fluffy body circle -->
-          <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
-          
-          <!-- Cute squinting smiling eyes -->
-          <path d="M 33,48 Q 38,44 43,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
-          <path d="M 57,48 Q 62,44 67,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
-          
-          <!-- Beak screaming/happy -->
-          <path d="M 45,52 Q 50,48 55,52 L 50,59 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
-          
-          <!-- Waving hand wing -->
-          <path d="M 76,51 C 82,51 86,59 80,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
-          <path d="M 24,51 C 18,51 14,59 20,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
-
-          <!-- Bouncy orange legs -->
-          <ellipse cx="42" cy="79" rx="5" ry="3.5" fill="#ea580c" />
-          <ellipse cx="58" cy="79" rx="5" ry="3.5" fill="#ea580c" />
+    <!-- Central Luxury Slate Capsule Card -->
+    <div style="max-width: 460px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(15, 32, 67, 0.45) 0%, rgba(11, 19, 41, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.22); border-radius: 24px; padding: 34px 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(56,189,248,0.08); text-align: center;">
+      
+      <!-- Think First Futuristic Strategic Mountain Compass Emblem -->
+      <div class="logo-box" style="margin-bottom: 12px; animation: scale-glow-pulse 2.2s infinite ease-in-out;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; height:42px; filter: drop-shadow(0 0 8px rgba(56,189,248,0.45));">
+          <path d="M12 2L2 22h20L12 2z"/>
+          <path d="M12 2v20"/>
+          <path d="M7 14h10"/>
         </svg>
       </div>
-      <div style="flex-grow: 1; text-align: left;">
-        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 900; color: #38bdf8; margin-bottom: 2px;">Ori (Your AI Delegate):</div>
-        <p style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin: 0; line-height: 1.45;">"Hi, Leader! Put your name below & let's conquer the AI Summit! Leap over policy barriers and corporate red tape!"</p>
-      </div>
-    </div>
 
-    <div class="input-group" style="margin-bottom: 12px; width: 100%;">
-      <input type="text" class="btn-input" id="userName" placeholder="Enter Your Executive Name" autocomplete="off" focus style="font-size: 14px; font-weight: 800; text-align: center; height: 48px; border-radius: 12px; border: 2.5px solid rgba(56, 189, 248, 0.2); background: rgba(15,23,42,0.8); color: #fff;">
+      <div style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+        <span>THINK FIRST</span> <span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-size: 8.5px; border: 1px solid rgba(56,189,248,0.3); font-weight:1000; letter-spacing:0.8px;">AI STRATEGY</span>
+      </div>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 1000; letter-spacing: -1.2px; text-shadow: 0 0 20px rgba(56, 189, 248, 0.35); color: #fff; margin-bottom: 14px; text-align: center; text-transform: uppercase;">
+        Strategic AI Ascent
+      </h1>
+      
+      <!-- Cute Welcoming Oreo speech panel! -->
+      <div style="display: flex; align-items: center; gap: 14px; background: rgba(56, 189, 248, 0.05); border: 1.5px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 12px 16px; margin-bottom: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); width: 100%;">
+        <!-- Super cute bouncing Oreo character -->
+        <div style="width: 58px; height: 58px; flex-shrink: 0; animation: bobbing 1.4s infinite ease-in-out;">
+          <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+            <defs>
+              <radialGradient id="cuteFluffGradWelcome" cx="45%" cy="35%" r="55%" fx="30%" fy="30%">
+                <stop offset="0%" stop-color="#fffbeb" />
+                <stop offset="35%" stop-color="#fef08a" />
+                <stop offset="85%" stop-color="#facc15" />
+                <stop offset="100%" stop-color="#eab308" />
+              </radialGradient>
+            </defs>
+            <!-- Twin sprout leaves on top -->
+            <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
+            <path d="M 51,23 Q 61,15 53,10 Q 47,16 50,23 Z" fill="#4ade80" stroke="#166534" stroke-width="1" />
+            
+            <!-- Fluffy body circle -->
+            <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
+            
+            <!-- Cute squinting smiling eyes -->
+            <path d="M 33,48 Q 38,44 43,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M 57,48 Q 62,44 67,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+            
+            <!-- Beak screaming/happy -->
+            <path d="M 45,52 Q 50,48 55,52 L 50,59 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
+            
+            <!-- Waving hand wing -->
+            <path d="M 76,51 C 82,51 86,59 80,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+            <path d="M 24,51 C 18,51 14,59 20,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+  
+            <!-- Bouncy orange legs -->
+            <ellipse cx="42" cy="79" rx="5" ry="3.5" fill="#ea580c" />
+            <ellipse cx="58" cy="79" rx="5" ry="3.5" fill="#ea580c" />
+          </svg>
+        </div>
+        <div style="flex-grow: 1; text-align: left;">
+          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 900; color: #38bdf8; margin-bottom: 2px;">Oreo (Your AI Delegate):</div>
+          <p style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin: 0; line-height: 1.45;">"Hi, Leader! Put your name below & let's conquer the AI Summit! Leap over policy barriers and corporate red tape!"</p>
+        </div>
+      </div>
+  
+      <div class="input-group" style="margin-bottom: 12px; width: 100%;">
+        <input type="text" class="btn-input" id="userName" placeholder="Enter Your Executive Name" autocomplete="off" focus style="font-size: 14px; font-weight: 800; text-align: center; height: 48px; border-radius: 12px; border: 2.5px solid rgba(56, 189, 248, 0.2); background: rgba(15,23,42,0.8); color: #fff;">
+      </div>
+      <button class="action-btn" id="startBtn" style="font-weight: 900; font-size: 15px; letter-spacing: 0.5px; height: 50px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); margin-top: 4px; box-shadow: 0 4px 15px rgba(37,99,235,0.4);">Authorize Plan & Begin Voyage 🚀</button>
     </div>
-    <button class="action-btn" id="startBtn" style="font-weight: 900; font-size: 15px; letter-spacing: 0.5px; height: 50px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); margin-top: 4px; box-shadow: 0 4px 15px rgba(37,99,235,0.4);">Authorize Plan & Begin Voyage 🚀</button>
   </div>
 
   <!-- STAGE COMPONENT (LEVEL SCREEN CONTAINER) -->
@@ -700,42 +840,47 @@
 
   <!-- INTERMISSION SCREEN -->
   <div class="screen intermission" id="scIntermission" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
-    <div class="logo-box" id="levelStartGlow" style="width:58px; height:58px; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); margin-bottom: 8px;">🥛</div>
-    <h2 id="intTitle" style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 2px;">Level 1: Lassi Valley</h2>
-    <div class="slant-deg" id="intSlope" style="font-size: 11px; font-weight: 700; color: var(--sky-glow); margin-bottom: 12px;">Slope: 20°</div>
     
-    <!-- Thinking Pose Gudu with speech bubble motivating player! -->
-    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.06); padding: 12px 14px; border-radius: 12px; max-width: 280px; width: 100%;">
-      <div style="width: 70px; height: 70px; animation: run-bob 0.8s infinite ease-in-out;">
-        <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(56,189,248,0.4));">
-          <!-- Twin sprout leaves on top -->
-          <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
-          <path d="M 51,23 Q 61,15 53,10 Q 47,16 50,23 Z" fill="#4ade80" stroke="#166534" stroke-width="1" />
-          <!-- Fluffy body circle -->
-          <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
-          <!-- Curious / thinking cute eyes -->
-          <circle cx="40" cy="48" r="3.5" fill="#0f172a" />
-          <circle cx="60" cy="48" r="3.5" fill="#0f172a" />
-          <circle cx="41.5" cy="46.5" r="1" fill="#fff" />
-          <circle cx="61.5" cy="46.5" r="1" fill="#fff" />
-          <!-- Small mouth in thinking pose -->
-          <path d="M 48,53 Q 50,50 52,53" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" />
-          <!-- Cute wing raised in "thinking pose" -->
-          <path d="M 33,58 C 30,55 35,51 44,53" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
-          <!-- Normal wing -->
-          <path d="M 76,53 C 82,53 85,61 80,61" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
-          <!-- Orange stationary feet -->
-          <ellipse cx="43" cy="79" rx="5" ry="3.5" fill="#ea580c" />
-          <ellipse cx="57" cy="79" rx="5" ry="3.5" fill="#ea580c" />
-        </svg>
+    <!-- Central Luxury Slate Capsule Card -->
+    <div style="max-width: 440px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(15, 32, 67, 0.45) 0%, rgba(11, 19, 41, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.22); border-radius: 24px; padding: 32px 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(56,189,248,0.08); text-align: center;">
+      
+      <div class="logo-box" id="levelStartGlow" style="width:58px; height:58px; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); margin-bottom: 8px;">🥛</div>
+      <h2 id="intTitle" style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 2px;">Level 1: Lassi Valley</h2>
+      <div class="slant-deg" id="intSlope" style="font-size: 11px; font-weight: 700; color: var(--sky-glow); margin-bottom: 12px;">Slope: 20°</div>
+      
+      <!-- Thinking Pose Oreo with speech bubble motivating player! -->
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; background: rgba(56,189,248,0.03); border: 1px solid rgba(56,189,248,0.15); padding: 12px 14px; border-radius: 12px; max-width: 280px; width: 100%;">
+        <div style="width: 70px; height: 70px; animation: bobbing 1.2s infinite ease-in-out;">
+          <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(56,189,248,0.4));">
+            <!-- Twin sprout leaves on top -->
+            <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
+            <path d="M 51,23 Q 61,15 53,10 Q 47,16 50,23 Z" fill="#4ade80" stroke="#166534" stroke-width="1" />
+            <!-- Fluffy body circle -->
+            <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
+            <!-- Curious / thinking cute eyes -->
+            <circle cx="40" cy="48" r="3.5" fill="#0f172a" />
+            <circle cx="60" cy="48" r="3.5" fill="#0f172a" />
+            <circle cx="41.5" cy="46.5" r="1" fill="#fff" />
+            <circle cx="61.5" cy="46.5" r="1" fill="#fff" />
+            <!-- Small mouth in thinking pose -->
+            <path d="M 48,53 Q 50,50 52,53" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" />
+            <!-- Cute wing raised in "thinking pose" -->
+            <path d="M 33,58 C 30,55 35,51 44,53" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+            <!-- Normal wing -->
+            <path d="M 76,53 C 82,53 85,61 80,61" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+            <!-- Orange stationary feet -->
+            <ellipse cx="43" cy="79" rx="5" ry="3.5" fill="#ea580c" />
+            <ellipse cx="57" cy="79" rx="5" ry="3.5" fill="#ea580c" />
+          </svg>
+        </div>
+        <div style="font-size: 11px; font-weight: 800; color: #cbd5e1; text-align: center; margin-top: 6px; line-height: 1.4;">
+          Oreo thinks: <span style="color: var(--sky-glow);">"Let's assess energy alignment. PEHLE ENERGY, PHIR CLIMB! Let's go!"</span>
+        </div>
       </div>
-      <div style="font-size: 11px; font-weight: 800; color: #cbd5e1; text-align: center; margin-top: 6px; line-height: 1.4;">
-        Ori thinks: <span style="color: var(--sky-glow);">"Let's assess energy alignment. PEHLE ENERGY, PHIR CLIMB! Let's go!"</span>
-      </div>
+  
+      <div class="npc-quote" id="intQuote" style="font-size: 12px; font-style: italic; color: #94a3b8; text-align: center; margin-bottom: 16px;">“Pehle energy. Phir climb.” - Zainab, Lassi Host</div>
+      <button class="action-btn" id="levelResumeBtn">Begin Climb 🏔️</button>
     </div>
-
-    <div class="npc-quote" id="intQuote" style="font-size: 12px; font-style: italic; color: #94a3b8; text-align: center; margin-bottom: 16px;">“Pehle energy. Phir climb.” - Zainab, Lassi Host</div>
-    <button class="action-btn" id="levelResumeBtn">Begin Climb 🏔️</button>
   </div>
 
   <!-- OVERLAYS: RETRY PANEL -->
@@ -765,7 +910,7 @@
           </svg>
         </div>
         <div style="font-size: 11px; font-weight: 800; color: #fecdd3; margin-top: 4px; line-height: 1.4;">
-          Ori says: <span style="color: #ffffff;">"Oops! Don't worry, Leader! Let's dust off the policy limits & leap again! You've got this!"</span>
+          Oreo says: <span style="color: #ffffff;">"Oops! Don't worry, Leader! Let's dust off the policy limits & leap again! You've got this!"</span>
         </div>
       </div>
 
@@ -801,7 +946,7 @@
           </svg>
         </div>
         <div style="font-size: 11px; font-weight: 800; color: #bae6fd; margin-top: 4px; line-height: 1.4;">
-          Ori says: <span style="color: #ffffff;">"Aah, perfect lassi! Pure organic energy to fuel our strategic brainpower!"</span>
+          Oreo says: <span style="color: #ffffff;">"Aah, perfect lassi! Pure organic energy to fuel our strategic brainpower!"</span>
         </div>
       </div>
 
@@ -837,7 +982,7 @@
           </svg>
         </div>
         <div style="font-size: 11px; font-weight: 800; color: #a7f3d0; margin-top: 4px; line-height: 1.35;">
-          Ori cheers: <span style="color: #ffffff;">"Woohoo! That's brilliant, Leader! Our roadmap is growing more cohesive by the second!"</span>
+          Oreo cheers: <span style="color: #ffffff;">"Woohoo! That's brilliant, Leader! Our roadmap is growing more cohesive by the second!"</span>
         </div>
       </div>
 
@@ -855,9 +1000,9 @@
         Amazing! Your personalized AI Action Roadmap has been generated and ready. We have compiled an email draft to <b>usman@thinkfrst.com</b>.
       </p>
 
-      <!-- Supportive Cheer Ori -->
+      <!-- Supportive Cheer Oreo -->
       <div style="display: flex; flex-direction: column; align-items: center; margin: 8px 0; background: rgba(56, 189, 248, 0.05); border: 1.5px solid rgba(56, 189, 248, 0.25); padding: 10px 14px; border-radius: 12px; width: 100%;">
-        <div id="cohortSuccessOriAvatar" style="width: 58px; height: 58px; animation: run-bob 0.8s infinite alternate ease-in-out;">
+        <div id="cohortSuccessOriAvatar" style="width: 58px; height: 58px; animation: bobbing 1.2s infinite ease-in-out;">
           <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(56,189,248,0.5));">
             <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
             <circle cx="50" cy="53" r="26" fill="url(#grad7)" stroke="#ca8a04" stroke-width="1.5" />
@@ -874,7 +1019,7 @@
           </svg>
         </div>
         <div style="font-size: 11px; font-weight: 800; color: #bae6fd; margin-top: 4px; line-height: 1.35;">
-          Ori cheers: <span style="color: #ffffff;">"Our Strategic Ascent is complete! Tap below to open your email, or copy the block directly!"</span>
+          Oreo cheers: <span style="color: #ffffff;">"Our Strategic Ascent is complete! Tap below to open your email, or copy the block directly!"</span>
         </div>
       </div>
 
@@ -907,15 +1052,15 @@
     <div class="notch"></div>
     <div class="quiz-layout">
       
-      <!-- Side panel for Ori (Left/Top side depending on screen width) -->
+      <!-- Side panel for Oreo (Left/Top side depending on screen width) -->
       <div id="quizOriPanel" style="flex: 0 0 100%; display: flex; flex-direction: row; sm:flex-direction: column; align-items: center; justify-content: flex-start; background: rgba(56,189,248,0.02); border: 1.5px solid rgba(56,189,248,0.12); border-radius: 16px; padding: 10px 14px; gap: 12px;">
-         <!-- Dynamic Ori Vector -->
-         <div id="quizOriAvatar" style="width: 72px; height: 72px; sm:width: 110px; sm:height: 110px; flex-shrink: 0; position: relative; animation: run-bob 1s infinite alternate ease-in-out;">
+         <!-- Dynamic Oreo Vector -->
+         <div id="quizOriAvatar" style="width: 72px; height: 72px; sm:width: 110px; sm:height: 110px; flex-shrink: 0; position: relative; animation: bobbing 1.6s infinite ease-in-out;">
             <!-- Rendered via JS -->
          </div>
          <!-- Dialogue advice bubble from Ori -->
          <div style="flex: 1; text-align: left; sm:text-align: center; display: flex; flex-direction: column; justify-content: center;">
-           <span style="font-size: 8px; font-weight: 900; letter-spacing: 1.2px; color: var(--sky-glow); text-transform: uppercase; display: block; margin-bottom: 2px;">ORI (Your AI Delegate)</span>
+           <span style="font-size: 8px; font-weight: 900; letter-spacing: 1.2px; color: var(--sky-glow); text-transform: uppercase; display: block; margin-bottom: 2px;">OREO (Your AI Delegate)</span>
            <div id="quizOriTip" style="font-size: 11px; font-weight: 700; color: #cbd5e1; line-height: 1.4; max-width: 260px;">"Pehle energy, phir climb! Let's choose your executive profile!"</div>
          </div>
       </div>
@@ -1490,14 +1635,36 @@
     soundEngine.play('jump');
   }
 
-  // JUMP TRIGGERS MOUSE & DESKTOP
-  window.addEventListener("pointerdown", (e) => {
-    // Proactive touch warming for mobile sound engine
+  // JUMP TRIGGERS MOUSE, POINTERS & NATIVE MOBILE TOUCH
+  const handleJumpTrigger = (e) => {
+    // Proactive touch warming and AudioContext resume for mobile engines
     soundEngine.init();
-    // Avoid triggering if clicked inside an interactive button/box
-    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.tile') || e.target.closest('.chip') || e.target.closest('.bp-item')) return;
+    if (soundEngine.ctx && soundEngine.ctx.state === 'suspended') {
+      soundEngine.ctx.resume().catch(() => {});
+    }
+    // Avoid triggering if clicked inside an interactive element
+    if (
+      e.target.closest('button') || 
+      e.target.closest('input') || 
+      e.target.closest('.tile') || 
+      e.target.closest('.chip') || 
+      e.target.closest('.bp-item') || 
+      e.target.closest('textarea') ||
+      e.target.closest('a')
+    ) return;
     executeJump();
+  };
+
+  // Listen directly to touchstart with passive option, and pointerdown for mice
+  window.addEventListener("pointerdown", (e) => {
+    // If it's a touch pointer, let touchstart handle it to avoid double-firing or lag
+    if (e.pointerType === 'touch') return;
+    handleJumpTrigger(e);
   });
+  window.addEventListener("touchstart", (e) => {
+    handleJumpTrigger(e);
+  }, { passive: true });
+
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
       e.preventDefault();
@@ -2513,6 +2680,8 @@
     const tiles = bsQuiz.querySelectorAll(".large-tile");
     tiles.forEach(t => {
       t.onclick = () => {
+        soundEngine.init();
+        soundEngine.play('collect');
         let val = t.dataset.val;
         if (cat === "maturity") val = parseInt(val);
         state.answers[cat] = val;
@@ -2529,6 +2698,8 @@
     const chips = bsQuiz.querySelectorAll(".large-chip-item");
     chips.forEach(c => {
       c.onclick = () => {
+        soundEngine.init();
+        soundEngine.play('collect');
         let val = c.dataset.val;
         if (cat === "targetHrs") val = parseInt(val);
         state.answers[cat] = val;
@@ -2548,6 +2719,8 @@
     }
     tiles.forEach(t => {
       t.onclick = () => {
+        soundEngine.init();
+        soundEngine.play('collect');
         const val = t.dataset.val;
         const index = state.answers.drains.indexOf(val);
         
