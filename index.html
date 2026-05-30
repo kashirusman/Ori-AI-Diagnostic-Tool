@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#090d16">
-<title>My AI Quest · Strategic Corporate & Humanitarian AI Challenge</title>
+<meta name="theme-color" content="#06020c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100%' height='100%' rx='22' fill='%23A100FF'/><circle cx='50' cy='46' r='24' fill='%23fffbeb' stroke='%23ca8a04' stroke-width='1.5'/><circle cx='41' cy='42' r='2.5' fill='%230f172a'/><circle cx='59' cy='42' r='2.5' fill='%230f172a'/><path d='M 45,46 Q 50,43 55,46 L 50,51 Z' fill='%23f97316'/><text x='50' y='88' font-size='16' font-family='sans-serif' font-weight='900' fill='%23ffffff' text-anchor='middle'>OREO</text></svg>">
+<title>Strategic AI Ascent · Think FRST</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap');
 
   :root {
-    --bg-dark: #070c17;
-    --navy-card: #0b1329;
-    --sky-glow: #38bdf8;
+    --bg-dark: #06020c;
+    --navy-card: #0e051a;
+    --sky-glow: #A100FF;
     --gold: #f59e0b;
     --gold-light: #fef08a;
     --rose: #f43f5e;
@@ -133,11 +134,11 @@
   /* GUDU SPRITE LAYER */
   .floating-xp {
     position: absolute;
-    color: #38bdf8;
-    font-family: 'Space Grotesk', sans-serif;
+    color: #d84cff;
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: 13px;
     font-weight: 800;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 10px rgba(56, 189, 248, 0.7);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 10px rgba(161, 0, 255, 0.85);
     pointer-events: none;
     z-index: 100;
     animation: bounce-float-up 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
@@ -178,11 +179,11 @@
   /* WELCOME SCREEN */
   .welcome-screen {
     padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background: radial-gradient(circle at center, #0b152d 0%, #03060f 100%); text-align: center;
+    background: radial-gradient(circle at center, #140526 0%, #03010c 100%); text-align: center;
   }
   .logo-box {
     width: 68px; height: 68px; display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 20%, transparent 70%);
+    background: radial-gradient(circle, rgba(161, 0, 255, 0.25) 20%, transparent 70%);
     border-radius: 50%; margin-bottom: 12px;
   }
   h1 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; tracking: -0.5px; margin-bottom: 10px; color: #fff; }
@@ -194,13 +195,13 @@
     border-radius: 12px; padding: 14px 16px; font-size: 14px; color: #fff; text-align: center;
     outline: none; transition: border-color 0.2s;
   }
-  .btn-input:focus { border-color: var(--sky-glow); background: rgba(56,189,248,0.03); }
+  .btn-input:focus { border-color: var(--sky-glow); background: rgba(161,0,255,0.03); }
 
   .action-btn {
-    width: 100%; max-width: 340px; height: 54px; background: var(--sky-glow); color: #020617;
+    width: 100%; max-width: 340px; height: 54px; background: var(--sky-glow); color: #ffffff;
     font-size: 16px; font-weight: 800; border: none; border-radius: 14px; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35); transition: opacity 0.2s, transform 0.1s;
+    box-shadow: 0 4px 15px rgba(161, 0, 255, 0.35); transition: opacity 0.2s, transform 0.1s;
     font-family: var(--font-sans);
   }
   .action-btn:active { transform: scale(0.98); opacity: 0.95; }
@@ -278,6 +279,16 @@
   }
   .bottom-sheet.active { display: flex; }
   @keyframes fade-in-sheet { from { opacity: 0; transform: scale(1.05); } to { opacity: 1; transform: scale(1); } }
+
+  @keyframes eye-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    93%, 97% { transform: scaleY(0.1); }
+  }
+  .blink-eye {
+    animation: eye-blink 3.5s infinite ease-in-out;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
 
   .quiz-layout {
     display: flex;
@@ -438,8 +449,8 @@
   }
   .loader-bar {
     height: 100%; width: 0%;
-    background: linear-gradient(90deg, #38bdf8, #60a5fa);
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.95);
+    background: linear-gradient(90deg, #A100FF, #d84cff);
+    box-shadow: 0 0 16px rgba(161, 0, 255, 0.95);
   }
 
   /* RESULT REPORT STYLING */
@@ -692,31 +703,31 @@
   <div class="screen active welcome-screen" id="scWelcome" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
     
     <!-- Central Luxury Slate Capsule Card -->
-    <div style="max-width: 460px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(15, 32, 67, 0.45) 0%, rgba(11, 19, 41, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.22); border-radius: 24px; padding: 34px 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(56,189,248,0.08); text-align: center;">
+    <div style="max-width: 460px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, rgba(10, 5, 20, 0.99) 100%); border: 1.5px solid rgba(161, 0, 255, 0.35); border-radius: 24px; padding: 34px 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(161,0,255,0.12); text-align: center;">
       
-      <!-- Think First Futuristic Strategic Mountain Compass Emblem -->
+      <!-- Think FRST Futuristic Strategic Mountain Compass Emblem -->
       <div class="logo-box" style="margin-bottom: 12px; animation: scale-glow-pulse 2.2s infinite ease-in-out;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; height:42px; filter: drop-shadow(0 0 8px rgba(56,189,248,0.45));">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#A100FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; height:42px; filter: drop-shadow(0 0 8px rgba(161,0,255,0.45));">
           <path d="M12 2L2 22h20L12 2z"/>
           <path d="M12 2v20"/>
           <path d="M7 14h10"/>
         </svg>
       </div>
 
-      <div style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-        <span>THINK FIRST</span> <span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-size: 8.5px; border: 1px solid rgba(56,189,248,0.3); font-weight:1000; letter-spacing:0.8px;">AI STRATEGY</span>
+      <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: #A100FF; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+        <span>THINK FRST</span> <span style="background: rgba(161,0,255,0.15); color: #A100FF; padding: 2px 6px; border-radius: 4px; font-size: 8.5px; border: 1px solid rgba(161,0,255,0.3); font-weight:1000; letter-spacing:0.8px;">AI STRATEGY</span>
       </div>
-      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 1000; letter-spacing: -1.2px; text-shadow: 0 0 20px rgba(56, 189, 248, 0.35); color: #fff; margin-bottom: 14px; text-align: center; text-transform: uppercase;">
+      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 1000; letter-spacing: -1.2px; text-shadow: 0 0 20px rgba(161, 0, 255, 0.35); color: #fff; margin-bottom: 14px; text-align: center; text-transform: uppercase;">
         Strategic AI Ascent
       </h1>
       
-      <!-- Cute Welcoming Oreo speech panel! -->
-      <div style="display: flex; align-items: center; gap: 14px; background: rgba(56, 189, 248, 0.05); border: 1.5px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 12px 16px; margin-bottom: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); width: 100%;">
-        <!-- Super cute bouncing Oreo character -->
+      <!-- Cute Welcoming OREO speech panel! -->
+      <div style="display: flex; align-items: center; gap: 14px; background: rgba(161, 0, 255, 0.05); border: 1.5px solid rgba(161, 0, 255, 0.2); border-radius: 16px; padding: 12px 16px; margin-bottom: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); width: 100%;">
+        <!-- Super cute bouncing OREO character -->
         <div style="width: 58px; height: 58px; flex-shrink: 0; animation: bobbing 1.4s infinite ease-in-out;">
           <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
             <defs>
-              <radialGradient id="cuteFluffGradWelcome" cx="45%" cy="35%" r="55%" fx="30%" fy="30%">
+               <radialGradient id="cuteFluffGradWelcome" cx="45%" cy="35%" r="55%" fx="30%" fy="30%">
                 <stop offset="0%" stop-color="#fffbeb" />
                 <stop offset="35%" stop-color="#fef08a" />
                 <stop offset="85%" stop-color="#facc15" />
@@ -730,9 +741,9 @@
             <!-- Fluffy body circle -->
             <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
             
-            <!-- Cute squinting smiling eyes -->
-            <path d="M 33,48 Q 38,44 43,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
-            <path d="M 57,48 Q 62,44 67,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+            <!-- Cute squinting smiling eyes (Blinking!) -->
+            <path d="M 33,48 Q 38,44 43,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" class="blink-eye" />
+            <path d="M 57,48 Q 62,44 67,48" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" class="blink-eye" />
             
             <!-- Beak screaming/happy -->
             <path d="M 45,52 Q 50,48 55,52 L 50,59 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
@@ -747,15 +758,15 @@
           </svg>
         </div>
         <div style="flex-grow: 1; text-align: left;">
-          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 900; color: #38bdf8; margin-bottom: 2px;">Oreo (Your AI Delegate):</div>
+          <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 13px; font-weight: 900; color: #A100FF; margin-bottom: 2px;">OREO (Your AI Delegate):</div>
           <p style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin: 0; line-height: 1.45;">"Hi, Leader! Put your name below & let's conquer the AI Summit! Leap over policy barriers and corporate red tape!"</p>
         </div>
       </div>
   
       <div class="input-group" style="margin-bottom: 12px; width: 100%;">
-        <input type="text" class="btn-input" id="userName" placeholder="Enter Your Executive Name" autocomplete="off" focus style="font-size: 14px; font-weight: 800; text-align: center; height: 48px; border-radius: 12px; border: 2.5px solid rgba(56, 189, 248, 0.2); background: rgba(15,23,42,0.8); color: #fff;">
+        <input type="text" class="btn-input" id="userName" placeholder="Enter Your Executive Name" autocomplete="off" focus style="font-size: 14px; font-weight: 800; text-align: center; height: 48px; border-radius: 12px; border: 2.5px solid rgba(161, 0, 255, 0.35); background: rgba(10,5,20,0.85); color: #fff;">
       </div>
-      <button class="action-btn" id="startBtn" style="font-weight: 900; font-size: 15px; letter-spacing: 0.5px; height: 50px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); margin-top: 4px; box-shadow: 0 4px 15px rgba(37,99,235,0.4);">Authorize Plan & Begin Voyage 🚀</button>
+      <button class="action-btn" id="startBtn" style="font-weight: 1000; font-size: 15px; letter-spacing: 0.5px; height: 50px; background: linear-gradient(135deg, #A100FF 0%, #7500C0 100%); margin-top: 4px; box-shadow: 0 4px 15px rgba(161, 0, 255, 0.45); font-family: 'Playfair Display', Georgia, serif;">Authorize Plan & Begin Voyage 🚀</button>
     </div>
   </div>
 
@@ -887,7 +898,7 @@
   <div class="overlay-panel" id="panelRetry">
     <div class="card-box" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
       <div class="glow-ring" style="background:rgba(244,63,94,0.1); border-color:rgba(244,63,94,0.3); margin-bottom: 8px;"><span style="font-size:38px;">💥</span></div>
-      <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 900; color: #fff;">Bandwidth Slashed!</h3>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 1000; color: #fff;">Bandwidth Slashed!</h3>
       
       <!-- Supportive Gudu with sweat drop encouraging retry! -->
       <div style="display: flex; flex-direction: column; align-items: center; margin: 12px 0; background: rgba(244,63,94,0.05); border: 1.5px solid rgba(244,63,94,0.25); padding: 10px 14px; border-radius: 12px; width: 100%; max-width: 290px;">
@@ -898,7 +909,7 @@
             <!-- Body -->
             <circle cx="50" cy="53" r="26" fill="url(#cuteFluffGradWelcome)" stroke="#ca8a04" stroke-width="1.5" />
             <!-- Sweat drop on face -->
-            <path d="M 68,40 Q 72,44 68,48 Q 64,44 68,40" fill="#38bdf8" />
+            <path d="M 68,40 Q 72,44 68,48 Q 64,44 68,40" fill="#60a5fa" />
             <!-- Worried wavy eyes -->
             <path d="M 32,47 Q 37,51 42,47" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
             <path d="M 58,47 Q 63,51 68,47" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
@@ -910,7 +921,7 @@
           </svg>
         </div>
         <div style="font-size: 11px; font-weight: 800; color: #fecdd3; margin-top: 4px; line-height: 1.4;">
-          Oreo says: <span style="color: #ffffff;">"Oops! Don't worry, Leader! Let's dust off the policy limits & leap again! You've got this!"</span>
+          OREO says: <span style="color: #ffffff;">"Oops! Don't worry, Leader! Let's dust off the policy limits & leap again! You've got this!"</span>
         </div>
       </div>
 
@@ -993,17 +1004,17 @@
 
   <!-- OVERLAYS: COHORT RESERVATION SUCCESS POPUP -->
   <div class="overlay-panel" id="panelCohortSuccess" style="display: none;">
-    <div class="card-box" style="border-color: #38bdf8; background: radial-gradient(circle at 50% 0%, rgb(15, 32, 67) 0%, var(--navy-card) 100%); text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 95%; max-height: 90vh; overflow-y: auto; padding: 22px 20px;">
-      <div class="glow-ring" style="background: rgba(56,189,248,0.15); border-color: #38bdf8; margin-bottom: 8px;"><span style="font-size:38px;">🚀</span></div>
-      <h3 style="color:#38bdf8; font-family: 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 1000; margin-bottom: 4px;">Cohort Seat Reserved!</h3>
+    <div class="card-box" style="border-color: #A100FF; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, var(--bg-dark) 100%); text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 95%; max-height: 90vh; overflow-y: auto; padding: 22px 20px;">
+      <div class="glow-ring" style="background: rgba(161,0,255,0.15); border-color: #A100FF; margin-bottom: 8px;"><span style="font-size:38px;">🚀</span></div>
+      <h3 style="color:#A100FF; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 1000; margin-bottom: 4px;">Cohort Seat Reserved!</h3>
       <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.4;">
         Amazing! Your personalized AI Action Roadmap has been generated and ready. We have compiled an email draft to <b>usman@thinkfrst.com</b>.
       </p>
 
-      <!-- Supportive Cheer Oreo -->
-      <div style="display: flex; flex-direction: column; align-items: center; margin: 8px 0; background: rgba(56, 189, 248, 0.05); border: 1.5px solid rgba(56, 189, 248, 0.25); padding: 10px 14px; border-radius: 12px; width: 100%;">
+      <!-- Supportive Cheer OREO -->
+      <div style="display: flex; flex-direction: column; align-items: center; margin: 8px 0; background: rgba(161, 0, 255, 0.05); border: 1.5px solid rgba(161, 0, 255, 0.25); padding: 10px 14px; border-radius: 12px; width: 100%;">
         <div id="cohortSuccessOriAvatar" style="width: 58px; height: 58px; animation: bobbing 1.2s infinite ease-in-out;">
-          <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(56,189,248,0.5));">
+          <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(161,0,255,0.55));">
             <path d="M 47,24 Q 37,11 47,7 Q 53,13 50,24 Z" fill="#22c55e" stroke="#15803d" stroke-width="1" />
             <circle cx="50" cy="53" r="26" fill="url(#grad7)" stroke="#ca8a04" stroke-width="1.5" />
             <!-- Super happy closed eyes -->
@@ -1018,8 +1029,8 @@
             <ellipse cx="57" cy="79" rx="5" ry="3.5" fill="#ea580c" />
           </svg>
         </div>
-        <div style="font-size: 11px; font-weight: 800; color: #bae6fd; margin-top: 4px; line-height: 1.35;">
-          Oreo cheers: <span style="color: #ffffff;">"Our Strategic Ascent is complete! Tap below to open your email, or copy the block directly!"</span>
+        <div style="font-size: 11px; font-weight: 800; color: #d84cff; margin-top: 4px; line-height: 1.35;">
+          OREO cheers: <span style="color: #ffffff;">"Our Strategic Ascent is complete! Tap below to open your email, or copy the block directly!"</span>
         </div>
       </div>
 
@@ -1031,11 +1042,11 @@
 
       <!-- Actions -->
       <div style="display: flex; gap: 10px; width: 100%; margin-top: 4px;">
-        <button class="action-btn" id="cohortCopyBtn" style="flex: 1; height: 42px; background: rgba(56,189,248,0.1); border: 1.5px solid #38bdf8; color: #38bdf8; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <button class="action-btn" id="cohortCopyBtn" style="flex: 1; height: 42px; background: rgba(161,0,255,0.1); border: 1.5px solid #A100FF; color: #A100FF; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 6px;">
           <span>📋</span> Copy Message
         </button>
         <a id="cohortMailtoLink" href="#" style="flex: 1; text-decoration: none;">
-          <button class="action-btn" style="width: 100%; height: 42px; background: #2563eb; color: #fff; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <button class="action-btn" style="width: 100%; height: 42px; background: #A100FF; color: #fff; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 6px;">
             <span>📧</span> Launch Email
           </button>
         </a>
@@ -1052,8 +1063,8 @@
     <div class="notch"></div>
     <div class="quiz-layout">
       
-      <!-- Side panel for Oreo (Left/Top side depending on screen width) -->
-      <div id="quizOriPanel" style="flex: 0 0 100%; display: flex; flex-direction: row; sm:flex-direction: column; align-items: center; justify-content: flex-start; background: rgba(56,189,248,0.02); border: 1.5px solid rgba(56,189,248,0.12); border-radius: 16px; padding: 10px 14px; gap: 12px;">
+      <!-- Side panel for OREO (Left/Top side depending on screen width) -->
+      <div id="quizOriPanel" style="flex: 0 0 100%; display: flex; flex-direction: row; sm:flex-direction: column; align-items: center; justify-content: flex-start; background: rgba(161, 0, 255, 0.05); border: 1.5px solid rgba(161, 0, 255, 0.22); border-radius: 16px; padding: 10px 14px; gap: 12px;">
          <!-- Dynamic Oreo Vector -->
          <div id="quizOriAvatar" style="width: 72px; height: 72px; sm:width: 110px; sm:height: 110px; flex-shrink: 0; position: relative; animation: bobbing 1.6s infinite ease-in-out;">
             <!-- Rendered via JS -->
@@ -1166,7 +1177,7 @@
           
           <!-- Stat 1 -->
           <div style="background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 10px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.15); display: flex; align-items: center; justify-content: center; color: #38bdf8; flex-shrink: 0;">
+            <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(161,0,255,0.08); border: 1px solid rgba(161,0,255,0.15); display: flex; align-items: center; justify-content: center; color: #A100FF; flex-shrink: 0;">
               <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             </div>
             <div style="min-width: 0;">
@@ -1249,7 +1260,7 @@
       
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <!-- Card 1 -->
-        <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(56, 189, 248, 0.04)'; this.style.borderColor='rgba(56, 189, 248, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
+        <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(161, 0, 255, 0.04)'; this.style.borderColor='rgba(161, 0, 255, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
           <div style="width: 44px; height: 44px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #ef4444; font-size: 16px; font-weight: bold; padding-left: 2px;">
             ▶
           </div>
@@ -1260,8 +1271,8 @@
         </a>
 
         <!-- Card 2 -->
-        <a href="https://www.youtube.com/watch?v=2IK3DFHRF3I" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(56, 189, 248, 0.04)'; this.style.borderColor='rgba(56, 189, 248, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
-          <div style="width: 44px; height: 44px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #38bdf8; font-size: 16px; font-weight: bold; padding-left: 2px;">
+        <a href="https://www.youtube.com/watch?v=2IK3DFHRF3I" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(161, 0, 255, 0.04)'; this.style.borderColor='rgba(161, 0, 255, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
+          <div style="width: 44px; height: 44px; background: rgba(161, 0, 255, 0.1); border: 1px solid rgba(161, 0, 255, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #d84cff; font-size: 16px; font-weight: bold; padding-left: 2px;">
             ▶
           </div>
           <div style="flex-grow: 1; min-width: 0; text-align: left;">
@@ -1271,7 +1282,7 @@
         </a>
 
         <!-- Card 3 -->
-        <a href="https://www.youtube.com/watch?v=mEsleV16qdo" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(56, 189, 248, 0.04)'; this.style.borderColor='rgba(56, 189, 248, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
+        <a href="https://www.youtube.com/watch?v=mEsleV16qdo" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='rgba(161, 0, 255, 0.04)'; this.style.borderColor='rgba(161, 0, 255, 0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.06)';">
           <div style="width: 44px; height: 44px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #10b981; font-size: 16px; font-weight: bold; padding-left: 2px;">
             ▶
           </div>
@@ -1541,20 +1552,28 @@
 
   // DYNAMIC TERRAIN HEIGHT MAPPER (Steeper altitude variations!)
   function getTerrainHeight(x, levelIndex) {
+    let evalX = x;
+    if (LEVELS_CONFIG && LEVELS_CONFIG[levelIndex]) {
+      const npcX = LEVELS_CONFIG[levelIndex].npcX;
+      if (x > npcX + 150) {
+        evalX = npcX + 150;
+      }
+    }
+
     if (levelIndex === 0) {
       // Rolling hills: gentle rolling terrain with minor slopes
-      return 10 + Math.sin(x * 0.012) * 16 + Math.sin(x * 0.035) * 4 + (x / TRACK_DUR) * 20;
+      return 10 + Math.sin(evalX * 0.012) * 16 + Math.sin(evalX * 0.035) * 4 + (evalX / TRACK_DUR) * 20;
     } else if (levelIndex === 1) {
       // Steeper road: dhaba hillside roads rising up wavelike styling
-      return 15 + Math.sin(x * 0.015) * 28 + Math.cos(x * 0.03) * 8 + (x / TRACK_DUR) * 65;
+      return 15 + Math.sin(evalX * 0.015) * 28 + Math.cos(evalX * 0.03) * 8 + (evalX / TRACK_DUR) * 65;
     } else if (levelIndex === 2) {
       // Mango Ridge: steeper drop paths, deep valley dips and high orchards climb
-      return 20 + Math.sin(x * 0.016) * 52 + Math.cos(x * 0.007) * 20 + (x / TRACK_DUR) * 95;
+      return 20 + Math.sin(evalX * 0.016) * 52 + Math.cos(evalX * 0.007) * 20 + (evalX / TRACK_DUR) * 95;
     } else if (levelIndex === 3) {
       // Summit Climb: extreme vertical ascent reaching the highest snowy Srinagar peak
-      const progress = x / TRACK_DUR;
+      const progress = evalX / TRACK_DUR;
       const baseClimb = progress * 140; // rises 140px vertically!
-      const peaks = Math.sin(x * 0.02) * 28 + Math.cos(x * 0.008) * 14;
+      const peaks = Math.sin(evalX * 0.02) * 28 + Math.cos(evalX * 0.008) * 14;
       return 15 + baseClimb + peaks;
     }
     return 0;
@@ -1563,7 +1582,7 @@
   // BUILD DYNAMIC TERRAIN SVG PATHS (using 360px height mapping for high climbs)
   function buildTerrainSvgPath(levelIndex) {
     const H = 360; // Height of the SVG coordinate space representation
-    const width = Math.max(1400, LEVELS_CONFIG[levelIndex].npcX + 220);
+    const width = Math.max(5000, window.innerWidth + 2000); // Massive width to ensure it is never broken at the end on any screens!
     let d_fill = "";
     let d_stroke = "";
     
@@ -1745,7 +1764,7 @@
       if (idx === 0) return "#10b981";
       if (idx === 1) return "#f59e0b";
       if (idx === 2) return "#eab308";
-      return "#38bdf8"; // cold summit glow
+      return "#A100FF"; // Think FRST summit purple
     })(state.levelIndex);
     
     terrainStroke.setAttribute("stroke", strokeColor);
@@ -1797,14 +1816,14 @@
       if (idx === 0) return "#10b981"; // green
       if (idx === 1) return "#f59e0b"; // orange
       if (idx === 2) return "#facc15"; // juicy mango yellow/gold
-      return "#38bdf8"; // cold summit blue
+      return "#A100FF"; // Think FRST summit purple
     })(state.levelIndex);
 
     const flagStrokeColor = (idx => {
       if (idx === 0) return "#047857";
       if (idx === 1) return "#b45309";
       if (idx === 2) return "#ca8a04";
-      return "#0284c7";
+      return "#7500C0";
     })(state.levelIndex);
 
     const flagHtml = `
@@ -2386,9 +2405,9 @@
   <circle cx="59" cy="46" r="7.5" fill="none" stroke="#1e293b" stroke-width="2" />
   <line x1="48.5" y1="46" x2="51.5" y2="46" stroke="#1e293b" stroke-width="2" />
   
-  <!-- Shiny happy eyes inside glasses -->
-  <circle cx="41" cy="46" r="2" fill="#1e293b" />
-  <circle cx="59" cy="46" r="2" fill="#1e293b" />
+  <!-- Shiny happy eyes inside glasses (Blinking!) -->
+  <circle cx="41" cy="46" r="2" fill="#1e293b" class="blink-eye" />
+  <circle cx="59" cy="46" r="2" fill="#1e293b" class="blink-eye" />
   
   <!-- Beak -->
   <path d="M 46,50 Q 50,47 54,50 Q 50,56 46,50" fill="#f97316" stroke="#c2410c" stroke-width="1" />
@@ -2401,7 +2420,7 @@
   <path d="M 76,51 C 82,51 86,59 80,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
   <!-- Left wing holding custom cute notepad -->
   <path d="M 24,51 C 18,51 14,59 20,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
-  <rect x="12" y="44" width="10" height="13" rx="1.5" fill="#2563eb" stroke="#1e3a8a" stroke-width="1" />
+  <rect x="12" y="44" width="10" height="13" rx="1.5" fill="#A100FF" stroke="#5e0099" stroke-width="1" />
   <line x1="14" y1="48" x2="20" y2="48" stroke="#fff" stroke-width="1" />
   <line x1="14" y1="51" x2="20" y2="51" stroke="#fff" stroke-width="1" />
   <line x1="14" y1="54" x2="18" y2="54" stroke="#fff" stroke-width="1" />
@@ -2428,8 +2447,8 @@
   <path d="M 51,20 Q 61,7 51,4 Q 47,10 50,19 Z" fill="#4ade80" stroke="#166534" stroke-width="1" />
   <circle cx="50" cy="51" r="26" fill="url(#grad2)" stroke="#ca8a04" stroke-width="1.5" />
   
-  <!-- Gesturing happy eyes looking up-right -->
-  <g transform="translate(1, 0)">
+  <!-- Gesturing happy eyes looking up-right (Blinking!) -->
+  <g transform="translate(1, 0)" class="blink-eye">
     <circle cx="39" cy="44" r="5" fill="#1e293b" />
     <circle cx="57" cy="44" r="5" fill="#1e293b" />
     <circle cx="41" cy="42" r="1.8" fill="#fff" />
@@ -2474,12 +2493,14 @@
   
   <!-- Headlamp strap with glowing light -->
   <rect x="34" y="27" width="32" height="7" rx="2.5" fill="#475569" stroke="#334155" stroke-width="1" />
-  <circle cx="50" cy="30" r="5" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+  <circle cx="50" cy="30" r="5" fill="#A100FF" stroke="#5e0099" stroke-width="1" />
   <polygon points="50,30 35,18 65,18" fill="#fef08a" opacity="0.3" />
   
-  <!-- Winking curious eye design -->
-  <circle cx="39" cy="45" r="4.5" fill="#1e293b" />
-  <circle cx="40.5" cy="43.5" r="1.5" fill="#fff" />
+  <!-- Winking curious eye design (Blinking open eye!) -->
+  <g class="blink-eye">
+    <circle cx="39" cy="45" r="4.5" fill="#1e293b" />
+    <circle cx="40.5" cy="43.5" r="1.5" fill="#fff" />
+  </g>
   <path d="M 56,47 Q 61,42 66,47" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
   
   <path d="M 45,52 Q 50,48 55,52 L 50,58 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
@@ -2488,7 +2509,7 @@
   <g transform="translate(18, 48)">
     <path d="M 0,0 C -8,0 -12,12 -6,14 C -2,15 4,8 4,1" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
     <path d="M -10,12 L -15,18" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" />
-    <circle cx="-10" cy="12" r="4.5" fill="rgba(56,189,248,0.2)" stroke="#94a3b8" stroke-width="1.5" />
+    <circle cx="-10" cy="12" r="4.5" fill="rgba(161,0,255,0.25)" stroke="#94a3b8" stroke-width="1.5" />
   </g>
   
   <path d="M 76,51 C 82,51 86,59 80,59" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
@@ -2518,12 +2539,12 @@
   <path d="M 61,58 L 59,71" stroke="#cbd5e1" stroke-width="2" />
   
   <!-- Protective clear goggles -->
-  <rect x="31" y="38" width="38" height="11" rx="4" fill="rgba(56,189,248,0.15)" stroke="#0c4a6e" stroke-width="1.5" />
-  <line x1="50" y1="38" x2="50" y2="49" stroke="#0c4a6e" stroke-width="1.2" />
+  <rect x="31" y="38" width="38" height="11" rx="4" fill="rgba(161,0,255,0.18)" stroke="#5e0099" stroke-width="1.5" />
+  <line x1="50" y1="38" x2="50" y2="49" stroke="#5e0099" stroke-width="1.2" />
   
-  <!-- Eyes inside goggles -->
-  <circle cx="41" cy="43.5" r="2.5" fill="#1e293b" />
-  <circle cx="59" cy="43.5" r="2.5" fill="#1e293b" />
+  <!-- Eyes inside goggles (Blinking!) -->
+  <circle cx="41" cy="43.5" r="2.5" fill="#1e293b" class="blink-eye" />
+  <circle cx="59" cy="43.5" r="2.5" fill="#1e293b" class="blink-eye" />
   
   <!-- Beak -->
   <path d="M 46,47 Q 50,45 54,47 L 50,53 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
@@ -2599,13 +2620,15 @@
   <circle cx="50" cy="51" r="26" fill="url(#grad6)" stroke="#ca8a04" stroke-width="1.5" />
   
   <!-- Headphones arc and ear pads -->
-  <path d="M 23,51 A 27,27 0 0,1 77,51" fill="none" stroke="#2563eb" stroke-width="3" />
-  <rect x="18" y="44" width="6" height="14" rx="3" fill="#1e40af" stroke="#1e3a8a" stroke-width="1" />
-  <rect x="76" y="44" width="6" height="14" rx="3" fill="#1e40af" stroke="#1e3a8a" stroke-width="1" />
+  <path d="M 23,51 A 27,27 0 0,1 77,51" fill="none" stroke="#A100FF" stroke-width="3" />
+  <rect x="18" y="44" width="6" height="14" rx="3" fill="#7500C0" stroke="#5e0099" stroke-width="1" />
+  <rect x="76" y="44" width="6" height="14" rx="3" fill="#7500C0" stroke="#5e0099" stroke-width="1" />
   
-  <!-- Eyes -->
-  <circle cx="41" cy="45" r="4.5" fill="#1e293b" />
-  <circle cx="42.5" cy="43.5" r="1.5" fill="#fff" />
+  <!-- Eyes (Blinking!) -->
+  <g class="blink-eye">
+    <circle cx="41" cy="45" r="4.5" fill="#1e293b" />
+    <circle cx="42.5" cy="43.5" r="1.5" fill="#fff" />
+  </g>
   <path d="M 56,47 Q 61,42 66,47" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
   
   <circle cx="34" cy="53" r="5" fill="#f43f5e" opacity="0.4" />
@@ -2657,9 +2680,9 @@
   <path d="M 44,50 Q 50,45 56,50 L 50,59 Z" fill="#f97316" stroke="#c2410c" stroke-width="1" />
   
   <!-- Golden shield on side -->
-  <path d="M 74,42 L 85,38 L 90,44 Q 90,56 82,62 Q 74,56 74,44 Z" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5" />
-  <path d="M 82,39 L 82,61 M 74,48 L 90,48" stroke="#3182ce" stroke-width="1.2" />
-  <polygon points="82,41 84,48 82,51 80,48" fill="#3182ce" />
+  <path d="M 74,42 L 85,38 L 90,44 Q 90,56 82,62 Q 74,56 74,44 Z" fill="rgba(161, 0, 255, 0.15)" stroke="#A100FF" stroke-width="1.5" />
+  <path d="M 82,39 L 82,61 M 74,48 L 90,48" stroke="#A100FF" stroke-width="1.2" />
+  <polygon points="82,41 84,48 82,51 80,48" fill="#A100FF" />
   
   <!-- Left wing cheering -->
   <path d="M 23,48 Q 14,41 18,37" fill="none" stroke="#ca8a04" stroke-width="4.5" stroke-linecap="round" />
@@ -3195,8 +3218,8 @@ ${userName}`;
           copyBtn.style.color = "var(--emerald)";
           setTimeout(() => {
             copyBtn.innerHTML = origText;
-            copyBtn.style.borderColor = "#38bdf8";
-            copyBtn.style.color = "#38bdf8";
+            copyBtn.style.borderColor = "#A100FF";
+            copyBtn.style.color = "#A100FF";
           }, 2000);
         }).catch(err => {
           // Fallback selection in case iframe sandbox restrictions block modern clipboard APIs
