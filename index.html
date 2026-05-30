@@ -496,31 +496,118 @@
   .bp-prog-lbl { font-size: 10px; color: #cbd5e1; }
   .bp-pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--sky-glow); }
 
-  .weeks-scroll { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-  .bp-card-week { border-left: 2px solid var(--sky-glow); padding-left: 10px; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-  .bp-week-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-  .bp-week-title { font-size: 14px; font-weight: 700; color: #fff; }
-  .bp-week-num { font-size: 8px; text-transform: uppercase; color: #64748b; font-weight: 800; }
-  .bp-week-focus { font-size: 11px; color: var(--sky-glow); margin-bottom: 6px; }
-  .bp-tasks { display: flex; flex-direction: column; gap: 5px; }
+  /* 30-DAY WALL CALENDAR SYSTEM */
+  .calendar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .week-row-block {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.015);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .week-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 8px;
+  }
+  .week-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+  .week-focus {
+    font-size: 11px;
+    color: #94a3b8;
+    margin: 0;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 900px) {
+    .calendar-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 
-  /* INTERACTIVE CHECKBOXES */
-  .bp-item { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
-  .bp-check { width: 14px; height: 14px; border: 1px solid rgba(255,255,255,0.25); border-radius: 3px; position: relative; margin-top: 1px; flex-shrink: 0; transition: all 0.2s; }
-  
-  .bp-item.checked {
-    background: rgba(16, 185, 129, 0.05) !important;
-    border-color: rgba(16, 185, 129, 0.35) !important;
-    border-left-color: var(--emerald) !important;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+  .calendar-day-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+    min-height: 80px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .bp-item.checked .bp-check { background: var(--emerald); border-color: var(--emerald); }
-  .bp-item.checked .bp-check::after {
-    content: ''; position: absolute; left: 5px; top: 1px; width: 4px; height: 8px;
-    border: solid #020617; border-width: 0 2px 2px 0; transform: rotate(45deg);
+  .calendar-day-card:hover {
+    transform: translateY(-2px);
+    background: rgba(161, 0, 255, 0.04);
+    border-color: rgba(161, 0, 255, 0.25);
+    box-shadow: 0 4px 12px rgba(161, 0, 255, 0.1);
   }
-  .bp-desc { font-size: 12px; color: #cbd5e1; line-height: 1.45; transition: color 0.2s; }
-  .bp-item.checked .bp-desc { color: #64748b; }
+  .day-badge {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .day-task-text {
+    font-size: 10.5px;
+    color: #cbd5e1;
+    line-height: 1.35;
+    margin: 0;
+    text-align: left;
+    flex-grow: 1;
+    transition: all 0.2s ease;
+  }
+  .day-chk {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transition: all 0.2s;
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  /* Interactive state toggle */
+  .calendar-day-card.checked {
+    background: rgba(16, 185, 129, 0.06) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+  }
+  .calendar-day-card.checked .day-task-text {
+    text-decoration: line-through #10b981 1.5px !important;
+    color: #64748b !important;
+    opacity: 0.6;
+  }
+  .calendar-day-card.checked .day-chk {
+    background: #10b981;
+    border-color: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+  }
 
   /* SAGES COUNCIL ROW */
   .council-card { background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); padding: 12px; margin-bottom: 16px; }
@@ -669,10 +756,153 @@
 
   /* PRINT STYLE STACK override */
   @media print {
-    body { background: #fff !important; color: #000 !important; }
-    .hud, .prog-timeline, .game-stage, .bottom-sheet, .actions-row, .cohort-join, .overlay-panel { display: none !important; }
-    .app-container, .screen { max-width: 100% !important; height: auto !important; position: relative !important; overflow: visible !important; }
-    .reveal-page { display: block !important; }
+    body {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    /* Hide ALL structural elements except scReveal and its blueprint-box */
+    .hud, .prog-timeline, .game-stage, .bottom-sheet, .actions-row, .cohort-join, .overlay-panel,
+    .welcome-screen, .intermission, #scStageGrid, #scIntermission, #scCinematic {
+      display: none !important;
+    }
+    
+    /* Inside scReveal, hide EVERYTHING except the blueprint-box */
+    #scReveal > :not(.blueprint-box) {
+      display: none !important;
+    }
+    
+    .app-container, .screen {
+      max-width: 100% !important;
+      width: 100% !important;
+      background: #ffffff !important;
+      color: #000000 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      position: relative !important;
+      overflow: visible !important;
+    }
+    
+    /* Make the calendar blueprint box beautiful and fill the page landscape-style */
+    .blueprint-box {
+      background: #ffffff !important;
+      border: 3px solid #000000 !important;
+      color: #000000 !important;
+      box-shadow: none !important;
+      padding: 18px !important;
+      margin: 0 !important;
+      border-radius: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    .bp-eyebrow {
+      color: #7500C0 !important;
+      font-weight: 900 !important;
+    }
+    .bp-header-lbl {
+      color: #000000 !important;
+      font-size: 20px !important;
+      font-weight: 1000 !important;
+      margin-bottom: 12px !important;
+    }
+    .bp-prog-bar {
+      border: 1.5px solid #000000 !important;
+      background: #f8fafc !important;
+      color: #000000 !important;
+    }
+    .bp-prog-bar span {
+      color: #000000 !important;
+    }
+    .calendar-container {
+      gap: 12px !important;
+    }
+    .week-row-block {
+      background: #ffffff !important;
+      border: 1.5px solid #000000 !important;
+      color: #000000 !important;
+      padding: 10px 12px !important;
+      border-radius: 8px !important;
+      page-break-inside: avoid !important;
+    }
+    .week-header {
+      border-bottom: 1px solid #000000 !important;
+      padding-bottom: 6px !important;
+    }
+    .week-title {
+      color: #000000 !important;
+      font-size: 13px !important;
+      font-weight: 950 !important;
+    }
+    .week-focus {
+      color: #334155 !important;
+      font-size: 10px !important;
+    }
+    .calendar-grid {
+      grid-template-columns: repeat(7, 1fr) !important; /* Force true 7-day wall calendar width on paper! */
+      gap: 6px !important;
+      display: grid !important;
+    }
+    .calendar-day-card {
+      background: #ffffff !important;
+      border: 1.5px solid #000000 !important;
+      color: #000000 !important;
+      min-height: 80px !important;
+      border-radius: 6px !important;
+      padding: 6px 8px !important;
+      box-shadow: none !important;
+    }
+    .day-badge {
+      border-bottom: 1px solid #000000 !important;
+      padding-bottom: 3px !important;
+      margin-bottom: 4px !important;
+    }
+    .day-badge span {
+      color: #000000 !important;
+      font-size: 9px !important;
+      font-weight: 1000 !important;
+    }
+    .day-task-text {
+      color: #1e293b !important;
+      font-size: 8.5px !important;
+      line-height: 1.25 !important;
+    }
+    .day-chk {
+      border: 1px solid #000000 !important;
+      width: 10px !important;
+      height: 10px !important;
+    }
+    .calendar-day-card.checked {
+      background: #f1f5f9 !important;
+      border-color: #000000 !important;
+    }
+    .calendar-day-card.checked .day-task-text {
+      text-decoration: line-through !important;
+      color: #475569 !important;
+    }
+    .calendar-day-card.checked .day-chk {
+      background: #000000 !important;
+    }
+    .bp-outcome-box {
+      border: 1.5px solid #000000 !important;
+      background: #f8fafc !important;
+      color: #000000 !important;
+      margin-top: 8px !important;
+    }
+    .bp-outcome-box span {
+      color: #0f172a !important;
+    }
+    .bp-outcome-box h4 {
+      color: #000000 !important;
+      font-weight: 1000 !important;
+    }
+    .bp-outcome-box p {
+      color: #334155 !important;
+    }
+    @page {
+      size: landscape; /* Request standard horizontal sheet print template automatically */
+      margin: 0.6cm;
+    }
   }
 </style>
 </head>
@@ -3059,46 +3289,13 @@
     `;
   }
 
-  // BUILD 30-DAY SUCCESS TIMELINE
+  // BUILD 30-DAY SUCCESS TIMELINE (CALENDAR FOCUS)
   function buildInteractiveSuccessTimeline(group, maturity, hrs) {
     const burns = state.answers.drains && state.answers.drains.length === 3 ? state.answers.drains : ["Manual Drafting", "Inbox Emails", "Data Alignment"];
-    const planModeLabel = (state.answers.workMode === "Buddy") ? "Secure colleague checkpoint" : "Personal dashboard calendar";
     const starGoalVal = state.answers.starPoint || "Save 5+ hours weekly";
 
-    // Set Week Plan content structures with high-impact single executive milestones
-    const weekPlanData = [
-      {
-        week: "Week 1: Pipeline Activation",
-        focus: `Audit workflows and establish 3 custom prompt guidelines to automate raw <b>${burns[0]}</b> bottlenecks, reclaiming immediate administrative bandwidth.`
-      },
-      {
-        week: "Week 2: Latency & Friction Minimization",
-        focus: `Deploy generative pilots directly into daily tasks to pre-draft recurring communications and optimize <b>${burns[1]}</b>.`
-      },
-      {
-        week: "Week 3: Corporate Policy Alignment",
-        focus: `Govern data privacy rules. Standardize robust local guidelines to eliminate risk of unapproved corporate data exposure.`
-      },
-      {
-        week: "Week 4: Executive Roadmap Scale",
-        focus: `Integrate team metrics and validate custom saved templates against your peak milestone objective: <b>${starGoalVal}</b>.`
-      }
-    ];
+    document.getElementById("bpLevelTitle").textContent = `30-Day Executive AI Wall Calendar: ${maturity} Track`;
 
-    document.getElementById("bpLevelTitle").textContent = `30-Day Alignment Strategy: ${maturity} Track`;
-    
-    // Add Daily Ritual and Proof Criteria
-    let checklistHtml = weekPlanData.map((w, wIdx) => `
-      <div class="bp-card-week bp-item" onclick="toggleWeekTaskCheck(this)" style="border-left: 4px solid ${wIdx % 2 === 0 ? 'var(--sky-glow)' : 'var(--gold)'}; border-radius: 12px; background: rgba(255,255,255,0.01); border-right: 1px solid rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); padding: 16px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: all 0.2s ease;">
-        <div class="bp-week-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-          <span class="bp-week-title" style="font-size: 14px; font-weight: 800; color: #ffffff; letter-spacing: -0.2px;">${w.week}</span>
-          <div class="bp-check" style="width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-radius: 5px; position: relative; flex-shrink: 0; transition: all 0.2s;"></div>
-        </div>
-        <p class="bp-desc" style="font-size: 12px; line-height: 1.5; color: #94a3b8; transition: color 0.15s; margin: 0; text-decoration: none !important;">${w.focus}</p>
-      </div>
-    `).join("");
-
-    // Add Habit builders
     let ritualText = "Ritual: Open an AI window daily. Spend 10 minutes prompt-crafting a simple reporting task.";
     if (maturity === "Silver") ritualText = "Ritual: Run custom saved instructions templates daily to quickly draft recurring mails.";
     if (maturity === "Gold") ritualText = "Ritual: Leverage prompt pipelines or local macros to automate sheet formatting.";
@@ -3107,24 +3304,132 @@
     if (group === "Manager") proofText = "Proof Deliverable: A published Operational AI playbook checklist with 5 shared core templates.";
     if (group === "Executive") proofText = "Proof Deliverable: A division AI audit deck and department feasibility proposal pitch.";
 
-    checklistHtml += `
-      <div class="bp-card-week" style="border-left: 4px solid var(--gold); background: rgba(245,158,11,0.02); border-radius: 12px; padding: 16px; margin-bottom: 4px; border-right: 1px solid rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
-        <div class="bp-week-info" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span class="bp-week-title" style="font-size: 13px; font-weight: 800; color: #facc15;">10-Minute Daily AI Ritual</span>
-          <span class="bp-week-num" style="color:var(--gold); font-size: 9px; font-weight:900;">DAILY HABIT</span>
-        </div>
-        <p style="font-size:12px; color:#cbd5e1; line-height: 1.5; margin:0;">${ritualText}</p>
-      </div>
-      <div class="bp-card-week" style="border-left: 4px solid var(--emerald); background: rgba(16,185,129,0.02); border-radius: 12px; padding: 16px; border-right: 1px solid rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
-        <div class="bp-week-info" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span class="bp-week-title" style="font-size: 13px; font-weight: 800; color: #34d399;">Day 30 final Proof of Concept</span>
-          <span class="bp-week-num" style="color:var(--emerald); font-size: 9px; font-weight:900;">GOVERNANCE CHECK</span>
-        </div>
-        <p style="font-size:12px; color:#cbd5e1; line-height: 1.5; margin:0;">${proofText}</p>
-      </div>
-    `;
+    // Action-based 30-day mini-tasks dynamically personalized around they options and level
+    const dayTasks = [
+      // Week 1: Pipeline Activation (Days 1 - 7)
+      `Audit current manual flows for handling <b>${burns[0]}</b>.`,
+      `Log exact total minutes lost on raw <b>${burns[0]}</b>.`,
+      `Identify the top 3 friction chokepoints in <b>${burns[0]}</b>.`,
+      `Draft a primary system instruction prompt to solve <b>${burns[0]}</b>.`,
+      `Sandbox & test prompt variations in a secure AI playground.`,
+      `Refine safety bounds to prevent unapproved proprietary data leak.`,
+      `Store Week 1 completed system instruction guidelines in your archive.`,
 
-    document.getElementById("bpWeeksWrapper").innerHTML = checklistHtml;
+      // Week 2: Latency & Friction Minimization (Days 8 - 14)
+      `Analyze manual communication latency associated with <b>${burns[1]}</b>.`,
+      `Create modular pre-draft structures for recurring communications.`,
+      `Integrate prompt pilot assistant into your active daily routine.`,
+      `Pre-draft 5 high-importance messages with your generative helper.`,
+      `Calibrate system instructions to stabilize tone and stylistic format.`,
+      `Measure saved weekly time metrics on <b>${burns[1]}</b> tasks.`,
+      `Publish the Latency Pilot guideline standard to your bookmark logs.`,
+
+      // Week 3: Corporate Policy Alignment (Days 15 - 21)
+      `Review company specific regulations and GDPR privacy limits.`,
+      `Establish local standards regarding local vs cloud model queries.`,
+      `Scrub client fields, names, or intellectual data from draft logs.`,
+      `Audit secondary team automation apps for unapproved model logins.`,
+      `Verify 'Zero-Leak' parameters on your active saved guidelines.`,
+      `Demonstrate compliance standards by acing custom quiz practices.`,
+      `Publish standardized team safety compliance checklist to your workspace.`,
+
+      // Week 4: Executive Roadmap Scale (Days 22 - 28)
+      `Review output accuracy score against your primary target metrics.`,
+      `Set folder/shortcut configurations to quickly access template cards.`,
+      `Run cross-team prompt trials to validate scalable employee speed.`,
+      `Audit performance metrics aligning with key objective: <b>${starGoalVal}</b>.`,
+      `Compile concrete time-saving scorecards over 4 target weeks.`,
+      `Distribute quick-reference cheat sheets to local onboarding routes.`,
+      `Catalog and index final approved department prompt libraries.`,
+
+      // Week 5 (Climactic Habits & Final Deliverable Validation)
+      `Habit Trigger: ${ritualText.replace('Ritual: ', '')}`,
+      `Milestone Delivery: ${proofText.replace('Proof Deliverable: ', '')}`
+    ];
+
+    const weeks = [
+      {
+        num: 1,
+        title: "Week 1: Pipeline Activation",
+        focus: `Audit workflows and establish system templates to automate raw <b>${burns[0]}</b> loopholes.`,
+        days: [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        num: 2,
+        title: "Week 2: Latency & Friction Minimization",
+        focus: `Deploy generative pilots and modular presets to automate and optimize <b>${burns[1]}</b>.`,
+        days: [8, 9, 10, 11, 12, 13, 14]
+      },
+      {
+        num: 3,
+        title: "Week 3: Corporate Policy Alignment",
+        focus: `Secure data privacy rules. Establish secure guidelines to protect critical organizational information.`,
+        days: [15, 16, 17, 18, 19, 20, 21]
+      },
+      {
+        num: 4,
+        title: "Week 4: Executive Roadmap Scale",
+        focus: `Govern team-wide benchmarks and templates to validate strategic intent: <b>${starGoalVal}</b>.`,
+        days: [22, 23, 24, 25, 26, 27, 28]
+      },
+      {
+        num: 5,
+        title: "Day 29 & 30: Climactic Habits & Governance Validation",
+        focus: `Lock down a sustainable daily ritual time-reclaim and validate final deliverables.`,
+        days: [29, 30]
+      }
+    ];
+
+    let plannerHtml = `<div class="calendar-container">`;
+
+    weeks.forEach(w => {
+      plannerHtml += `
+        <div class="week-row-block">
+          <div class="week-header">
+            <h4 class="week-title" style="font-family: 'Space Grotesk', sans-serif;">${w.title}</h4>
+            <p class="week-focus">${w.focus}</p>
+          </div>
+          <div class="calendar-grid">
+      `;
+
+      w.days.forEach(day => {
+        const taskText = dayTasks[day - 1];
+        const isHighlight = day === 29 || day === 30;
+        
+        let colorAccent = "var(--sky-glow)";
+        if (day === 29) colorAccent = "var(--gold)";
+        if (day === 30) colorAccent = "var(--emerald)";
+        if (day >= 8 && day <= 14) colorAccent = "var(--gold)";
+        if (day >= 15 && day <= 21) colorAccent = "#d84cff";
+        if (day >= 22 && day <= 28) colorAccent = "#A100FF";
+
+        const cardStyle = isHighlight 
+          ? `border: 1.5px solid ${colorAccent}; background: rgba(255,255,255,0.01); box-shadow: 0 0 10px rgba(16,185,129,0.03);` 
+          : `border-left: 3px solid ${colorAccent};`;
+
+        plannerHtml += `
+          <div class="calendar-day-card bp-item" onclick="toggleWeekTaskCheck(this)" style="${cardStyle}">
+            <div class="day-badge">
+              <span style="color: ${colorAccent}; font-family: 'Space Grotesk', sans-serif; font-size: 8px; font-weight: 900; letter-spacing: 0.5px;">DAY ${day < 10 ? '0' + day : day}</span>
+              <div class="day-chk"></div>
+            </div>
+            <p class="day-task-text" style="margin-top: 2px;">${taskText}</p>
+          </div>
+        `;
+      });
+
+      plannerHtml += `
+          </div>
+        </div>
+      `;
+    });
+
+    plannerHtml += `</div>`;
+
+    document.getElementById("bpWeeksWrapper").innerHTML = plannerHtml;
+
+    // Reset progress text
+    document.getElementById("bpCheckProgress").textContent = "0% Complete";
 
     // Update Outcome calculations
     const yearlyHours = hrs * 52;
