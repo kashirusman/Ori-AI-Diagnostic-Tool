@@ -1020,7 +1020,7 @@
       </div>
   
       <div class="npc-quote" id="intQuote" style="font-size: 12px; font-style: italic; color: #94a3b8; text-align: center; margin-bottom: 16px;">“Pehle energy. Phir climb.” - Zainab, Lassi Host</div>
-      <button class="action-btn" id="levelResumeBtn">Begin Climb 🏔️</button>
+      <button class="action-btn" id="levelResumeBtn">Continue →</button>
     </div>
   </div>
 
@@ -1964,152 +1964,8 @@
   // GAME TRIGGER START CLIMB
   document.getElementById("levelResumeBtn").onclick = () => {
     soundEngine.init();
-    const l = LEVELS_CONFIG[state.levelIndex];
-    
-    // Layout and gradient themes
-    gameViewport.style.background = l.skyGrad;
-    
-    // Hide flat bottom line since we are using beautiful dynamic SVG mountain paths!
-    pathBed.style.display = "none";
-
-    // Clear and build dynamic mountain SVG path container
-    trackScroll.innerHTML = `
-      <svg id="terrainSvg" style="position: absolute; left: 0; bottom: 0; height: 360px; overflow: visible; z-index: 5; pointer-events: none;">
-        <defs>
-          <linearGradient id="terrainGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" id="terrainGradStart" stop-color="#0f766e" stop-opacity="0.85"/>
-            <stop offset="100%" stop-color="#020617" stop-opacity="0.95"/>
-          </linearGradient>
-        </defs>
-        <path id="terrainFill" fill="url(#terrainGrad)" />
-        <path id="terrainStroke" fill="none" stroke-width="4" />
-      </svg>
-    `;
-
-    // Render curved SVG terrain path dynamically
-    const { fill, stroke, width } = buildTerrainSvgPath(state.levelIndex);
-    const terrainSvg = document.getElementById("terrainSvg");
-    const terrainFill = document.getElementById("terrainFill");
-    const terrainStroke = document.getElementById("terrainStroke");
-    const terrainGradStart = document.getElementById("terrainGradStart");
-    
-    terrainSvg.setAttribute("width", width);
-    terrainFill.setAttribute("d", fill);
-    terrainStroke.setAttribute("d", stroke);
-    
-    // Adapt colors matching each unique level
-    const strokeColor = (idx => {
-      if (idx === 0) return "#10b981";
-      if (idx === 1) return "#f59e0b";
-      if (idx === 2) return "#eab308";
-      return "#A100FF"; // Think FRST summit purple
-    })(state.levelIndex);
-    
-    terrainStroke.setAttribute("stroke", strokeColor);
-    terrainStroke.style.filter = `drop-shadow(0 0 5px ${strokeColor})`;
-    terrainGradStart.setAttribute("stop-color", l.groundColor);
-    
-    // Generate hurdles onto the dynamic coordinates
-    l.obstacles.forEach((obX, id) => {
-      const el = document.createElement("div");
-      el.className = "track-element obstacle";
-      el.style.left = `${obX}px`;
-      el.innerHTML = (id % 2 === 0) ? SVGS_PROCEDURAL.log : SVGS_PROCEDURAL.rock;
-      el.dataset.x = obX;
-      el.dataset.hit = "false";
-
-      // Position hurdle on the rolling terrain profile
-      const obY = getTerrainHeight(obX, state.levelIndex);
-      el.style.bottom = `${72 + obY}px`;
-      
-      // Align option rotate angle matching the slope of the hill
-      const obYNext = getTerrainHeight(obX + 10, state.levelIndex);
-      const obSlope = (obYNext - obY) / 10;
-      const obAngleDeg = Math.max(-45, Math.min(45, Math.atan(obSlope) * (180 / Math.PI)));
-      el.style.transform = `translateX(-50%) rotate(${obAngleDeg}deg)`;
-      el.style.transformOrigin = "bottom center";
-
-      trackScroll.appendChild(el);
-    });
-
-    // Generate NPC aligned on sloping terrain
-    const npcEl = document.createElement("div");
-    npcEl.className = "track-element npc";
-    npcEl.style.left = `${l.npcX}px`;
-    npcEl.dataset.x = l.npcX;
-    
-    const npcY = getTerrainHeight(l.npcX, state.levelIndex);
-    npcEl.style.bottom = `${72 + npcY}px`;
-    
-    // To ensure the stations and host characters stand tall and never fall or tilt, we use 0deg rotation
-    npcEl.style.transform = `translateX(-50%) rotate(0deg)`;
-    npcEl.style.transformOrigin = "bottom center";
-    
-    let npcSvg = SVGS_PROCEDURAL.woman;
-    if (state.levelIndex === 1) npcSvg = SVGS_PROCEDURAL.turban_man;
-    if (state.levelIndex === 2) npcSvg = SVGS_PROCEDURAL.orchard_girl;
-    if (state.levelIndex === 3) npcSvg = SVGS_PROCEDURAL.wise_sage;
-
-    const flagColor = (idx => {
-      if (idx === 0) return "#10b981"; // green
-      if (idx === 1) return "#f59e0b"; // orange
-      if (idx === 2) return "#facc15"; // juicy mango yellow/gold
-      return "#A100FF"; // Think FRST summit purple
-    })(state.levelIndex);
-
-    const flagStrokeColor = (idx => {
-      if (idx === 0) return "#047857";
-      if (idx === 1) return "#b45309";
-      if (idx === 2) return "#ca8a04";
-      return "#7500C0";
-    })(state.levelIndex);
-
-    const flagHtml = `
-      <div class="npc-station-flag">
-        <svg viewBox="0 0 40 130" style="width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 10px ${flagColor});">
-          <!-- Tall flagpole with silver gradient -->
-          <rect x="18" y="10" width="4" height="120" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-          <!-- Heavy marble pedestal mount -->
-          <path d="M 8,130 L 32,130 L 26,122 L 14,122 Z" fill="#64748b" stroke="#334155" stroke-width="1"/>
-          <!-- Floating glowing banner on top -->
-          <path d="M 22,14 L 52,14 L 46,28 L 52,42 L 22,42 Z" fill="${flagColor}" stroke="${flagStrokeColor}" stroke-width="1.5"/>
-          <circle cx="36" cy="28" r="9.5" fill="#ffffff"/>
-          <text x="27.5" y="34.5" font-size="15" font-weight="bold">${l.foodGlow}</text>
-          <!-- Level text badge -->
-          <rect x="-8" y="52" width="56" height="18" rx="4" fill="#020617" stroke="${flagColor}" stroke-width="1.5" />
-          <text x="20" y="65" font-size="9" fill="#ffffff" font-weight="900" font-family="'Space Grotesk', sans-serif" text-anchor="middle">STN-${l.num}</text>
-        </svg>
-      </div>
-    `;
-
-    npcEl.innerHTML = `
-      <div class="npc-label">${l.npcName.split(",")[0]}</div>
-      <div class="npc-char-body">${npcSvg}</div>
-      ${flagHtml}
-    `;
-    trackScroll.appendChild(npcEl);
-
-    // Reset physics trackers
-    state.trackX = 0;
-    state.guduY = 0;
-    state.guduVelocityY = 0;
-    state.isJumping = false;
-    state.invulnerable = 0;
-    
-    const startY = getTerrainHeight(80, state.levelIndex);
-    guduChar.style.bottom = `${72 + startY}px`;
-    guduChar.style.transform = `translateY(0px)`;
-    guduAnimator.className = "gudu-body gudu-run";
-    guduAnimator.style.opacity = "1";
-
-    trackScroll.style.transform = `translateX(0px)`;
-    timelineFill.style.width = "0%";
-
-    // Start Running ticks loop
-    switchToScreen(scStageGrid);
-    state.running = true;
-    lastFrameTime = performance.now();
-    requestAnimationFrame(gameLoop);
+    soundEngine.play('click');
+    openQuizSheet();
   };
 
   // LOOP MECHANISM
