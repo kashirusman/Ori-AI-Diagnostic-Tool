@@ -934,97 +934,11 @@
     .tf-logo .think-text { color: #000000 !important; }
     .tf-logo .frst-text { color: #000000 !important; }
   }
-
-  /* MOBILE ROTATION REMINDER & MOBILE GATE */
-  #mobileStartGate {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: #06020c;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    text-align: center;
-  }
-  #portraitRotationOverlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #020617;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-  }
-
-  @media (max-width: 1024px) {
-    #mobileStartGate:not(.gate-hidden) {
-      display: flex !important;
-    }
-  }
-  @media (max-width: 1024px) and (orientation: portrait) {
-    #portraitRotationOverlay {
-      display: flex !important;
-    }
-    /* Hide the gate if the orientation is portrait to show rotation warning first */
-    #mobileStartGate {
-      display: none !important;
-    }
-  }
 </style>
 </head>
 <body>
 
 <div class="app-container" id="chassis">
-
-  <!-- PORTRAIT ROTATION REMINDER OVERLAY -->
-  <div id="portraitRotationOverlay">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
-      <div class="rotate-phone-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#A100FF" stroke-width="2" style="width: 50px; height: 50px;">
-          <rect x="5" y="2" width="14" height="20" rx="2" style="transform-origin: center; animation: rotatePhoneAnim 2s infinite ease-in-out;" />
-          <line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3" stroke-linecap="round" />
-        </svg>
-      </div>
-      <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: #fff; font-weight: 800;">Landscape Required</h3>
-      <p style="font-size: 13px; color: #cbd5e1; max-width: 250px; line-height: 1.4; margin: 0;">Please rotate your phone horizontally for the best experience.</p>
-    </div>
-  </div>
-
-  <style>
-    @keyframes rotatePhoneAnim {
-      0% { transform: rotate(0deg); }
-      30% { transform: rotate(90deg); }
-      70% { transform: rotate(90deg); }
-      100% { transform: rotate(0deg); }
-    }
-  </style>
-
-  <!-- MOBILE START GATE (Mobile-only gate before game begins) -->
-  <div id="mobileStartGate">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 420px; padding: 22px; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, rgba(10, 5, 20, 0.99) 100%); border: 1.5px solid rgba(161, 0, 255, 0.35); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
-      <div class="tf-logo-container" style="margin-bottom: 20px;">
-        <div class="tf-logo">
-          <div class="pointer">
-            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 6px #A100FF);">
-              <polygon points="100,100 0,0 100,0" fill="#A100FF" />
-            </svg>
-          </div>
-          <span class="think-text">think</span><span class="frst-text">FRST</span>
-        </div>
-      </div>
-      <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 8px; text-transform: uppercase; tracking: -0.2px;">Strategic AI Ascent</h2>
-      <p style="font-size: 12px; color: #cbd5e1; line-height: 1.45; margin-bottom: 20px; max-width: 300px;">Experience the immersive sound-guided executive AI summit quest. Rotate your phone into landscape mode and join the voyage.</p>
-      
-      <button class="action-btn" id="mobileGateBtn" style="font-weight: 900; font-size: 14px; height: 50px; background: linear-gradient(135deg, #A100FF 0%, #7500C0 100%); width: 100%; box-shadow: 0 4px 15px rgba(161, 0, 255, 0.45); cursor: pointer; border-radius: 12px; border: none; color: white;">
-        Tap to unlock sound and enter landscape mode
-      </button>
-    </div>
-  </div>
 
   <!-- HUD STATUS -->
   <div class="hud" id="hud" style="display:none;">
@@ -1830,37 +1744,6 @@
   window.addEventListener('touchstart', unlockAudio, { passive: true });
   window.addEventListener('pointerdown', unlockAudio, { passive: true });
 
-  // MOBILE GATE CLICK TRIGGER IMPLEMENTATION
-  document.getElementById("mobileGateBtn").onclick = () => {
-    // Unlock all audios safely
-    unlockAudio();
-    
-    // Request document Fullscreen
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen().catch(err => console.warn("Fullscreen skip:", err));
-    } else if (document.documentElement.webkitRequestFullscreen) {
-      document.documentElement.webkitRequestFullscreen();
-    }
-    
-    // Screen orientation landscape lock if supported
-    try {
-      if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
-        window.screen.orientation.lock('landscape').catch(err => {
-          console.warn("Orientation lock rejected:", err);
-        });
-      }
-    } catch (e) {
-      console.warn("Orientation locking not supported:", e);
-    }
-    
-    // Hide start gate overlay
-    const gate = document.getElementById("mobileStartGate");
-    if (gate) {
-      gate.classList.add("gate-hidden");
-      gate.style.display = "none";
-    }
-  };
-
   // CONSTANT LEVELS DECLARATIONS
   const LEVELS_CONFIG = [
     {
@@ -2119,9 +2002,14 @@
 
   // INITIALIZE WELCOME RUN
   document.getElementById("startBtn").onclick = () => {
+    // Unlock Audio Context immediately on tap
+    unlockAudio();
     const rawVal = document.getElementById("userName").value.trim();
     if (rawVal) state.userName = rawVal;
-    soundEngine.init();
+    
+    // Play button click sound
+    soundEngine.play('click');
+    
     switchToScreen(scStageGrid);
     hud.style.display = "flex";
     timelineBar.style.display = "block";
