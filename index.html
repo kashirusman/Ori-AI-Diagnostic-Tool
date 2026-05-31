@@ -1693,7 +1693,33 @@
         
         const now = this.ctx.currentTime;
         
-        if (id === 'jump') {
+        if (id === 'click') {
+          // Crispy short button click sound (satisfying UI interaction)
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1200, now);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.04);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (id === 'tileSelect') {
+          // High-frequency option tile select click sound
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(1400, now);
+          osc.frequency.exponentialRampToValueAtTime(900, now + 0.03);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        } else if (id === 'jump') {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.connect(gain);
@@ -1711,7 +1737,7 @@
           const gain = this.ctx.createGain();
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-
+ 
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(140, now);
           osc.frequency.linearRampToValueAtTime(30, now + 0.22);
@@ -1733,7 +1759,7 @@
           });
         } else if (id === 'success') {
           // A glorious celebratory ascending major seventh arpeggio harmony on milestone reach!
-          [261.63, 329.63, 392.00, 493.88, 523.25].forEach((freq, idx) => {
+          [261.63, 329.63, 392.00, 493.88, 523.25, 659.25].forEach((freq, idx) => {
             const co = this.ctx.createOscillator();
             const cg = this.ctx.createGain();
             co.connect(cg);
@@ -1752,61 +1778,9 @@
     }
   };
 
-  // VOICE SPEECH SYNTHESIS ENGINE (Addresses 'No voice in mobile' with direct unlock hook)
-  const voiceEngine = {
-    enabled: true,
-    currentUtter: null,
-    init() {
-      try {
-        if ('speechSynthesis' in window) {
-          // Speak a silent utterance to unlock the context on mobile touch/click
-          const u = new SpeechSynthesisUtterance(' ');
-          u.volume = 0;
-          window.speechSynthesis.speak(u);
-        }
-      } catch (e) {
-        console.warn("Speech Synthesis init skipped:", e);
-      }
-    },
-    speak(text) {
-      if (!this.enabled || !('speechSynthesis' in window)) return;
-      try {
-        window.speechSynthesis.cancel();
-        
-        // Strip HTML tag structures
-        const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
-        
-        const utter = new SpeechSynthesisUtterance(cleanText);
-        utter.rate = 1.05;
-        utter.pitch = 1.15; // Friendly high pitch for Oreo
-        
-        const voices = window.speechSynthesis.getVoices();
-        if (voices && voices.length > 0) {
-          const EngVoice = voices.find(v => v.lang.startsWith('en-') && v.name.includes('Google')) ||
-                           voices.find(v => v.lang.startsWith('en-')) ||
-                           voices[0];
-          if (EngVoice) {
-            utter.voice = EngVoice;
-          }
-        }
-        
-        window.speechSynthesis.speak(utter);
-        this.currentUtter = utter;
-      } catch (err) {
-        console.warn("Speech Synthesis failed:", err);
-      }
-    },
-    stop() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    }
-  };
-
   // WEB AUDIO MOBILE AUTO-UNLOCKER AND WARM-UP PRIMER
   const unlockAudio = () => {
     soundEngine.init();
-    voiceEngine.init();
     if (soundEngine.ctx) {
       if (soundEngine.ctx.state === 'suspended') {
         soundEngine.ctx.resume().catch(e => console.warn(e));
@@ -1862,11 +1836,6 @@
       gate.classList.add("gate-hidden");
       gate.style.display = "none";
     }
-    
-    // Speak welcoming greeting dialogue
-    setTimeout(() => {
-      voiceEngine.speak("Welcome to think first strategic AI ascent. Tap let's climb to launch your quest.");
-    }, 600);
   };
 
   // CONSTANT LEVELS DECLARATIONS
@@ -2155,7 +2124,6 @@
     document.getElementById("levelStartGlow").textContent = l.foodGlow;
 
     switchToScreen(scIntermission);
-    voiceEngine.speak(`Milestone ${l.num}: ${l.name}. Oreo says: ${l.npcLine}`);
   }
 
   // GAME TRIGGER START CLIMB
@@ -2532,11 +2500,6 @@
     document.getElementById("bsSubtitle").textContent = `Milestone ${l.num} of 4 · Screen ${step + 1} of ${totalSteps}`;
     document.getElementById("bsNpcLine").textContent = `"${l.npcLineSub}" - ${l.npcName}`;
 
-    // Voice announcement of the stage introduction on the first screen
-    if (step === 0) {
-      voiceEngine.speak(`${l.npcName} says: ${l.npcLineSub}`);
-    }
-
     // Update Ori's happy pose dynamically on every quiz screen!
     updateQuizOriPose(state.levelIndex, step);
 
@@ -2810,12 +2773,6 @@
     }
 
     evalQuizEnable();
-
-    // For subsequent steps, speak the question out loud
-    if (step > 0) {
-      const qText = document.getElementById("bsQuestion").textContent;
-      voiceEngine.speak(qText);
-    }
   }
 
   function updateQuizOriPose(levelIndex, step) {
@@ -3150,7 +3107,7 @@
     tiles.forEach(t => {
       t.onclick = () => {
         soundEngine.init();
-        soundEngine.play('collect');
+        soundEngine.play('tileSelect');
         let val = t.dataset.val;
         if (cat === "maturity") val = parseInt(val);
         state.answers[cat] = val;
@@ -3168,7 +3125,7 @@
     chips.forEach(c => {
       c.onclick = () => {
         soundEngine.init();
-        soundEngine.play('collect');
+        soundEngine.play('tileSelect');
         let val = c.dataset.val;
         if (cat === "targetHrs") val = parseInt(val);
         state.answers[cat] = val;
@@ -3189,7 +3146,7 @@
     tiles.forEach(t => {
       t.onclick = () => {
         soundEngine.init();
-        soundEngine.play('collect');
+        soundEngine.play('tileSelect');
         const val = t.dataset.val;
         const index = state.answers.drains.indexOf(val);
         
@@ -3247,7 +3204,7 @@
       // Advance step inside other screens
       state.quizStep++;
       renderQuizStep();
-      soundEngine.play('collect');
+      soundEngine.play('click');
     } else {
       // Confirmed last screen! Close quiz sheet, update score
       document.getElementById("bsQuiz").classList.remove("active");
@@ -3261,7 +3218,7 @@
       document.getElementById("badgeGlyph").textContent = l.badgeGlyph;
       document.getElementById("badgeAnnounce").textContent = `You unlocked: ${l.badge}`;
       
-      soundEngine.play('collect');
+      soundEngine.play('success');
       showOverlay(panelBadge);
     }
   };
@@ -3269,6 +3226,7 @@
   // ADVANCE NEXT HEIGHT CHASSIS
   document.getElementById("nextLevelActionBtn").onclick = () => {
     soundEngine.init();
+    soundEngine.play('click');
     hideOverlay(panelBadge);
     
     if (state.levelIndex < 3) {
@@ -3284,7 +3242,7 @@
   // CINEMATIC COUNTER REVEAL
   function startCinematicReveal() {
     switchToScreen(scCinematic);
-    soundEngine.play('collect');
+    soundEngine.play('success');
 
     let loadBar = 0;
     const barFill = document.getElementById("cinematicBar");
@@ -3441,7 +3399,7 @@
     });
 
     switchToScreen(scReveal);
-    soundEngine.play('collect');
+    soundEngine.play('success');
 
     // Hover interactive effect for hologram element
     const container = document.getElementById("holoContainer");
