@@ -1694,31 +1694,40 @@
         const now = this.ctx.currentTime;
         
         if (id === 'click') {
-          // Crispy short button click sound (satisfying UI interaction)
+          // Short crispy mechanical bubble pop sound
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(1200, now);
-          osc.frequency.exponentialRampToValueAtTime(600, now + 0.04);
-          gain.gain.setValueAtTime(0.08, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.frequency.setValueAtTime(450, now);
+          osc.frequency.exponentialRampToValueAtTime(150, now + 0.05);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
           osc.start(now);
-          osc.stop(now + 0.04);
+          osc.stop(now + 0.05);
         } else if (id === 'tileSelect') {
-          // High-frequency option tile select click sound
-          const osc = this.ctx.createOscillator();
+          // Beautiful soft metallic chime (harmonic resonant pentatonic blend)
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-          osc.connect(gain);
+          osc1.connect(gain);
+          osc2.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(1400, now);
-          osc.frequency.exponentialRampToValueAtTime(900, now + 0.03);
-          gain.gain.setValueAtTime(0.05, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-          osc.start(now);
-          osc.stop(now + 0.03);
+          
+          osc1.type = 'sine';
+          osc2.type = 'sine';
+          
+          osc1.frequency.setValueAtTime(880, now); // A5 high bell tone
+          osc2.frequency.setValueAtTime(1174.66, now + 0.015); // D6 bright harmony
+          
+          gain.gain.setValueAtTime(0.045, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          
+          osc1.start(now);
+          osc2.start(now + 0.015);
+          osc1.stop(now + 0.22);
+          osc2.stop(now + 0.22);
         } else if (id === 'jump') {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
@@ -1757,19 +1766,33 @@
             co.start(now + i * 0.05);
             co.stop(now + i * 0.05 + 0.17);
           });
+        } else if (id === 'achievement') {
+          // Fast ascending bright triad arpeggio for level stage completion
+          [440.00, 554.37, 659.25, 880.00].forEach((freq, idx) => {
+            const co = this.ctx.createOscillator();
+            const cg = this.ctx.createGain();
+            co.connect(cg);
+            cg.connect(this.ctx.destination);
+            co.type = 'sine';
+            co.frequency.setValueAtTime(freq, now + idx * 0.07);
+            cg.gain.setValueAtTime(0.06, now + idx * 0.07);
+            cg.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
+            co.start(now + idx * 0.07);
+            co.stop(now + idx * 0.07 + 0.29);
+          });
         } else if (id === 'success') {
-          // A glorious celebratory ascending major seventh arpeggio harmony on milestone reach!
-          [261.63, 329.63, 392.00, 493.88, 523.25, 659.25].forEach((freq, idx) => {
+          // Ascending major seventh celebratory victory arpeggio on milestone unlock
+          [261.63, 329.63, 392.00, 493.88, 523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
             const co = this.ctx.createOscillator();
             const cg = this.ctx.createGain();
             co.connect(cg);
             cg.connect(this.ctx.destination);
             co.type = idx % 2 === 0 ? 'sine' : 'triangle';
             co.frequency.setValueAtTime(freq, now + idx * 0.06);
-            cg.gain.setValueAtTime(0.08, now + idx * 0.06);
-            cg.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.35);
+            cg.gain.setValueAtTime(0.07, now + idx * 0.06);
+            cg.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.4);
             co.start(now + idx * 0.06);
-            co.stop(now + idx * 0.06 + 0.36);
+            co.stop(now + idx * 0.06 + 0.41);
           });
         }
       } catch (err) {
@@ -2462,7 +2485,7 @@
     document.getElementById("powerGlowIcon").textContent = l.foodGlow;
 
     guduAnimator.className = "gudu-body"; // Idle state
-    soundEngine.play('success');
+    soundEngine.play('achievement');
     
     setTimeout(() => {
       showOverlay(panelPowerup);
@@ -2472,6 +2495,7 @@
   // OPEN MILESTONE QUIZ
   document.getElementById("powerupOkBtn").onclick = () => {
     soundEngine.init();
+    soundEngine.play('click');
     hideOverlay(panelPowerup);
     openQuizSheet();
   };
