@@ -732,25 +732,17 @@
       gap: 6px !important;
     }
     .bottom-sheet .large-tile {
-      padding: 8px 12px !important;
-      border-radius: 10px !important;
+      padding: 10px 14px !important;
+      border-radius: 12px !important;
     }
-    .bottom-sheet .large-tile h4 {
-      font-size: 12px !important;
+    .bottom-sheet .large-tile .tile-title {
+      font-size: 14px !important;
     }
-    .bottom-sheet .large-tile p {
-      font-size: 10px !important;
-      display: none !important; /* hide extra text description on very low height to preserve choices clickable area */
+    .bottom-sheet .large-tile .tile-desc {
+      display: none !important; /* Hide extra description text on low height to keep choices clear and easily clickable */
     }
     #quizOriPanel {
-      padding: 8px !important;
-    }
-    #quizOriPanel div[style*="width: 70px"] {
-      width: 40px !important;
-      height: 40px !important;
-    }
-    #quizOriAdvice {
-      font-size: 12px !important;
+      display: none !important; /* Hide left Ori/Oreo panel on small screens / landscape to preserve full options width */
     }
   }
 
@@ -905,43 +897,134 @@
     }
   }
 
-
-  /* === MOBILE FIXES ADDED BY CHATGPT === */
-  html, body { width: 100%; height: 100%; overflow: hidden; touch-action: manipulation; }
-
-  @media (max-width: 639px) {
-    .bottom-sheet { padding: 10px !important; overflow: hidden !important; }
-    .quiz-layout { display: flex !important; flex-direction: column !important; gap: 8px !important; height: 100% !important; min-height: 0 !important; overflow: hidden !important; }
-    #quizOriPanel { flex: 0 0 104px !important; height: 104px !important; max-height: 104px !important; min-height: 0 !important; padding: 8px 10px !important; gap: 8px !important; }
-    #quizOriAvatar { width: 54px !important; height: 54px !important; }
-    #quizOriTip { font-size: 10px !important; line-height: 1.25 !important; max-height: 48px !important; overflow: hidden !important; }
-    #bsSubtitle { font-size: 9px !important; margin-bottom: 2px !important; }
-    #bsNpcLine { font-size: 10px !important; line-height: 1.25 !important; margin-bottom: 4px !important; }
-    #bsQuestion { font-size: 15px !important; line-height: 1.2 !important; margin: 4px 0 8px !important; }
-    #bsContent { flex: 1 1 auto !important; min-height: 0 !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 8px !important; }
-    .bottom-sheet .large-tile { padding: 10px 12px !important; min-height: 54px !important; }
-    .bottom-sheet .large-tile .title-title, .bottom-sheet .large-tile h4 { font-size: 13px !important; }
-    .bottom-sheet .large-tile .title-desc, .bottom-sheet .large-tile p { font-size: 10px !important; line-height: 1.25 !important; }
-    .bottom-sheet .large-chip-list { display: grid !important; grid-template-columns: 1fr !important; gap: 8px !important; }
-    .bottom-sheet .large-chip-item { padding: 10px 12px !important; min-height: 46px !important; }
-    #quizProceedBtn { flex: 0 0 44px !important; height: 44px !important; margin-top: 8px !important; font-size: 13px !important; }
+  /* tf-logo brand definitions */
+  .tf-logo {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    font-family: 'Playfair Display', Georgia, serif;
+    line-height: 1;
+    cursor: default;
+    height: 38px;
+    padding-left: 14px;
+  }
+  .tf-logo .pointer {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    width: 14px;
+    height: 14px;
+  }
+  .tf-logo .think-text {
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    color: #ffffff;
+    text-transform: lowercase;
+  }
+  .tf-logo .frst-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.5px;
   }
 
-  @media (orientation: landscape) and (max-height: 540px) {
-    .bottom-sheet { padding: 8px !important; }
-    .quiz-layout { flex-direction: row !important; gap: 10px !important; }
-    #quizOriPanel { flex: 0 0 160px !important; width: 160px !important; height: 100% !important; max-height: none !important; flex-direction: column !important; justify-content: center !important; }
-    #quizOriAvatar { width: 58px !important; height: 58px !important; }
-    #bsQuestion { font-size: 14px !important; margin: 2px 0 6px !important; }
-    #bsContent { overflow-y: auto !important; min-height: 0 !important; }
-    #quizProceedBtn { height: 40px !important; flex-basis: 40px !important; }
+  /* PRINT THEME OVERRIDES FOR LOGO */
+  @media print {
+    .tf-logo .think-text { color: #000000 !important; }
+    .tf-logo .frst-text { color: #000000 !important; }
   }
 
+  /* MOBILE ROTATION REMINDER & MOBILE GATE */
+  #mobileStartGate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #06020c;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  #portraitRotationOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #020617;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    #mobileStartGate:not(.gate-hidden) {
+      display: flex !important;
+    }
+  }
+  @media (max-width: 1024px) and (orientation: portrait) {
+    #portraitRotationOverlay {
+      display: flex !important;
+    }
+    /* Hide the gate if the orientation is portrait to show rotation warning first */
+    #mobileStartGate {
+      display: none !important;
+    }
+  }
 </style>
 </head>
 <body>
 
 <div class="app-container" id="chassis">
+
+  <!-- PORTRAIT ROTATION REMINDER OVERLAY -->
+  <div id="portraitRotationOverlay">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
+      <div class="rotate-phone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#A100FF" stroke-width="2" style="width: 50px; height: 50px;">
+          <rect x="5" y="2" width="14" height="20" rx="2" style="transform-origin: center; animation: rotatePhoneAnim 2s infinite ease-in-out;" />
+          <line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </div>
+      <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: #fff; font-weight: 800;">Landscape Required</h3>
+      <p style="font-size: 13px; color: #cbd5e1; max-width: 250px; line-height: 1.4; margin: 0;">Please rotate your phone horizontally for the best experience.</p>
+    </div>
+  </div>
+
+  <style>
+    @keyframes rotatePhoneAnim {
+      0% { transform: rotate(0deg); }
+      30% { transform: rotate(90deg); }
+      70% { transform: rotate(90deg); }
+      100% { transform: rotate(0deg); }
+    }
+  </style>
+
+  <!-- MOBILE START GATE (Mobile-only gate before game begins) -->
+  <div id="mobileStartGate">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 420px; padding: 22px; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, rgba(10, 5, 20, 0.99) 100%); border: 1.5px solid rgba(161, 0, 255, 0.35); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
+      <div class="tf-logo-container" style="margin-bottom: 20px;">
+        <div class="tf-logo">
+          <div class="pointer">
+            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 6px #A100FF);">
+              <polygon points="100,100 0,0 100,0" fill="#A100FF" />
+            </svg>
+          </div>
+          <span class="think-text">think</span><span class="frst-text">FRST</span>
+        </div>
+      </div>
+      <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 8px; text-transform: uppercase; tracking: -0.2px;">Strategic AI Ascent</h2>
+      <p style="font-size: 12px; color: #cbd5e1; line-height: 1.45; margin-bottom: 20px; max-width: 300px;">Experience the immersive sound-guided executive AI summit quest. Rotate your phone into landscape mode and join the voyage.</p>
+      
+      <button class="action-btn" id="mobileGateBtn" style="font-weight: 900; font-size: 14px; height: 50px; background: linear-gradient(135deg, #A100FF 0%, #7500C0 100%); width: 100%; box-shadow: 0 4px 15px rgba(161, 0, 255, 0.45); cursor: pointer; border-radius: 12px; border: none; color: white;">
+        Tap to unlock sound and enter landscape mode
+      </button>
+    </div>
+  </div>
 
   <!-- HUD STATUS -->
   <div class="hud" id="hud" style="display:none;">
@@ -966,21 +1049,21 @@
   <div class="screen active welcome-screen" id="scWelcome" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
     
     <!-- Central Luxury Slate Capsule Card -->
-    <div style="max-width: 460px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, rgba(10, 5, 20, 0.99) 100%); border: 1.5px solid rgba(161, 0, 255, 0.35); border-radius: 24px; padding: 34px 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(161,0,255,0.12); text-align: center;">
+    <div style="max-width: 460px; width: 92%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(161, 0, 255, 0.15) 0%, rgba(10, 5, 20, 0.99) 100%); border: 1.5px solid rgba(161, 0, 255, 0.35); border-radius: 24px; padding: 24px 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 40px rgba(161,0,255,0.12); text-align: center;">
       
-      <!-- Think FRST Futuristic Strategic Mountain Compass Emblem -->
-      <div class="logo-box" style="margin-bottom: 12px; animation: scale-glow-pulse 2.2s infinite ease-in-out;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#A100FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; height:42px; filter: drop-shadow(0 0 8px rgba(161,0,255,0.45));">
-          <path d="M12 2L2 22h20L12 2z"/>
-          <path d="M12 2v20"/>
-          <path d="M7 14h10"/>
-        </svg>
+      <!-- thinkFRST Brand Logo -->
+      <div style="margin-bottom: 16px; animation: scale-glow-pulse 2.2s infinite ease-in-out;">
+        <div class="tf-logo">
+          <div class="pointer">
+            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; filter: drop-shadow(0 0 5px #A100FF);">
+              <polygon points="100,100 0,0 100,0" fill="#A100FF" />
+            </svg>
+          </div>
+          <span class="think-text">think</span><span class="frst-text">FRST</span>
+        </div>
       </div>
 
-      <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: #A100FF; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-        <span>THINK FRST</span> <span style="background: rgba(161,0,255,0.15); color: #A100FF; padding: 2px 6px; border-radius: 4px; font-size: 8.5px; border: 1px solid rgba(161,0,255,0.3); font-weight:1000; letter-spacing:0.8px;">AI STRATEGY</span>
-      </div>
-      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 1000; letter-spacing: -1.2px; text-shadow: 0 0 20px rgba(161, 0, 255, 0.35); color: #fff; margin-bottom: 14px; text-align: center; text-transform: uppercase;">
+      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 1000; letter-spacing: -1.2px; text-shadow: 0 0 20px rgba(161, 0, 255, 0.35); color: #fff; margin-bottom: 14px; text-align: center; text-transform: uppercase;">
         Strategic AI Ascent
       </h1>
       
@@ -1374,7 +1457,7 @@
   <!-- REVEAL BLUEPRINT SCREEN -->
   <div class="screen reveal-page" id="scReveal" style="padding: 14px; background-color: #030712;">
     
-    <!-- Celebratory High-contrast Victory Banner with Cute Jumping Thumbs-Up Chicken -->
+    <!-- Celebratory High-contrast Victory Banner with Cute Jumping Thumbs-Up Oreo -->
     <div style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #1e1b4b 0%, #090d29 100%); border: 1.5px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 100%;">
       <div style="flex-grow: 1; padding-right: 10px; z-index: 2; text-align: left;">
         <span style="font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 2.5px; color: #c084fc; display: block; margin-bottom: 2px;">MISSION ACCOMPLISHED 🏆</span>
@@ -1669,9 +1752,61 @@
     }
   };
 
+  // VOICE SPEECH SYNTHESIS ENGINE (Addresses 'No voice in mobile' with direct unlock hook)
+  const voiceEngine = {
+    enabled: true,
+    currentUtter: null,
+    init() {
+      try {
+        if ('speechSynthesis' in window) {
+          // Speak a silent utterance to unlock the context on mobile touch/click
+          const u = new SpeechSynthesisUtterance(' ');
+          u.volume = 0;
+          window.speechSynthesis.speak(u);
+        }
+      } catch (e) {
+        console.warn("Speech Synthesis init skipped:", e);
+      }
+    },
+    speak(text) {
+      if (!this.enabled || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        
+        // Strip HTML tag structures
+        const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
+        
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        utter.rate = 1.05;
+        utter.pitch = 1.15; // Friendly high pitch for Oreo
+        
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          const EngVoice = voices.find(v => v.lang.startsWith('en-') && v.name.includes('Google')) ||
+                           voices.find(v => v.lang.startsWith('en-')) ||
+                           voices[0];
+          if (EngVoice) {
+            utter.voice = EngVoice;
+          }
+        }
+        
+        window.speechSynthesis.speak(utter);
+        this.currentUtter = utter;
+      } catch (err) {
+        console.warn("Speech Synthesis failed:", err);
+      }
+    },
+    stop() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  };
+
   // WEB AUDIO MOBILE AUTO-UNLOCKER AND WARM-UP PRIMER
   const unlockAudio = () => {
     soundEngine.init();
+    voiceEngine.init();
     if (soundEngine.ctx) {
       if (soundEngine.ctx.state === 'suspended') {
         soundEngine.ctx.resume().catch(e => console.warn(e));
@@ -1697,6 +1832,42 @@
   window.addEventListener('click', unlockAudio);
   window.addEventListener('touchstart', unlockAudio, { passive: true });
   window.addEventListener('pointerdown', unlockAudio, { passive: true });
+
+  // MOBILE GATE CLICK TRIGGER IMPLEMENTATION
+  document.getElementById("mobileGateBtn").onclick = () => {
+    // Unlock all audios safely
+    unlockAudio();
+    
+    // Request document Fullscreen
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(err => console.warn("Fullscreen skip:", err));
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    }
+    
+    // Screen orientation landscape lock if supported
+    try {
+      if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
+        window.screen.orientation.lock('landscape').catch(err => {
+          console.warn("Orientation lock rejected:", err);
+        });
+      }
+    } catch (e) {
+      console.warn("Orientation locking not supported:", e);
+    }
+    
+    // Hide start gate overlay
+    const gate = document.getElementById("mobileStartGate");
+    if (gate) {
+      gate.classList.add("gate-hidden");
+      gate.style.display = "none";
+    }
+    
+    // Speak welcoming greeting dialogue
+    setTimeout(() => {
+      voiceEngine.speak("Welcome to think first strategic AI ascent. Tap let's climb to launch your quest.");
+    }, 600);
+  };
 
   // CONSTANT LEVELS DECLARATIONS
   const LEVELS_CONFIG = [
@@ -1984,6 +2155,7 @@
     document.getElementById("levelStartGlow").textContent = l.foodGlow;
 
     switchToScreen(scIntermission);
+    voiceEngine.speak(`Milestone ${l.num}: ${l.name}. Oreo says: ${l.npcLine}`);
   }
 
   // GAME TRIGGER START CLIMB
@@ -2360,6 +2532,11 @@
     document.getElementById("bsSubtitle").textContent = `Milestone ${l.num} of 4 · Screen ${step + 1} of ${totalSteps}`;
     document.getElementById("bsNpcLine").textContent = `"${l.npcLineSub}" - ${l.npcName}`;
 
+    // Voice announcement of the stage introduction on the first screen
+    if (step === 0) {
+      voiceEngine.speak(`${l.npcName} says: ${l.npcLineSub}`);
+    }
+
     // Update Ori's happy pose dynamically on every quiz screen!
     updateQuizOriPose(state.levelIndex, step);
 
@@ -2633,6 +2810,12 @@
     }
 
     evalQuizEnable();
+
+    // For subsequent steps, speak the question out loud
+    if (step > 0) {
+      const qText = document.getElementById("bsQuestion").textContent;
+      voiceEngine.speak(qText);
+    }
   }
 
   function updateQuizOriPose(levelIndex, step) {
@@ -3176,6 +3359,66 @@
     const hrs = state.answers.targetHrs || 5;
     document.getElementById("resHours").textContent = `${hrs} Hrs / Wk`;
 
+    // Render strengths & actions lists dynamically to reflect diagnostic choices
+    const STRENGTHS_DB = {
+      "Workforce": [
+        "Rapid procedural adapter for standard operations",
+        "Efficient solo task automation and draft runner",
+        "Focused task tracker with low operational friction"
+      ],
+      "Manager": [
+        "Skilled workflow bottleneck and latency coordinator",
+        "Collaborative prompt standardizer for team silos",
+        "Tactical timeline controller with automated checklists"
+      ],
+      "Executive": [
+        "Visionary pilot leader for high-impact AI vectors",
+        "Division-wide policy and administrative risk-mitigator",
+        "Strategic scaler of high-return corporate assets"
+      ]
+    };
+
+    const ACTIONS_DB = {
+      "Bronze": [
+        "Establish a daily 10-minute sandbox play limit",
+        "Audit repetitive draft-creation latency drains",
+        "Document high-return simple prompt structures"
+      ],
+      "Silver": [
+        "Standardize team templates for key meeting briefs",
+        "Formulate localized safe corporate usage rules",
+        "Adopt multi-turn context structures for larger reports"
+      ],
+      "Gold": [
+        "Scale automated prompt chains across department divisions",
+        "Host recurring cross-team sharing sprints",
+        "Formulate a Division-Specific AI Ascent Playbook"
+      ]
+    };
+
+    const strengths = STRENGTHS_DB[group] || STRENGTHS_DB["Workforce"];
+    const actions = ACTIONS_DB[matKey] || ACTIONS_DB["Silver"];
+
+    const strengthsEl = document.getElementById("resStrengthsList");
+    if (strengthsEl) {
+      strengthsEl.innerHTML = strengths.map(s => `
+        <li style="font-size: 11px; font-weight: 700; color: #e2e8f0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
+          <span style="color: #34d399;">✔</span>
+          <span>${s}</span>
+        </li>
+      `).join("");
+    }
+
+    const actionsEl = document.getElementById("resActionsList");
+    if (actionsEl) {
+      actionsEl.innerHTML = actions.map(a => `
+        <li style="font-size: 11px; font-weight: 700; color: #e2e8f0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
+          <span style="color: var(--gold);">▶</span>
+          <span>${a}</span>
+        </li>
+      `).join("");
+    }
+
     // Render badges list
     document.getElementById("resUnlockedBadges").innerHTML = LEVELS_CONFIG.map(l => `<span class="badge-item">${l.badge}</span>`).join("");
 
@@ -3614,30 +3857,6 @@ ${userName}`;
       body: JSON.stringify(data)
     }).catch(err => console.warn("Persistence saved offline:", err));
   }
-
-
-  // === MOBILE AUDIO + ORIENTATION UNLOCK ADDED BY CHATGPT ===
-  function unlockMobileExperience() {
-    try {
-      soundEngine.init();
-      if (soundEngine.ctx && soundEngine.ctx.state === 'suspended') {
-        soundEngine.ctx.resume().catch(() => {});
-      }
-    } catch (e) {}
-    try {
-      const el = document.documentElement;
-      if (el.requestFullscreen && !document.fullscreenElement) {
-        el.requestFullscreen().catch(() => {});
-      }
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
-    } catch (e) {}
-  }
-  ['touchstart', 'click'].forEach(evt => {
-    document.addEventListener(evt, unlockMobileExperience, { once: true, passive: true });
-  });
-
 </script>
 </body>
 </html>
