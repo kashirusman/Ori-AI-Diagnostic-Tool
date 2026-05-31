@@ -496,117 +496,84 @@
   .bp-prog-lbl { font-size: 10px; color: #cbd5e1; }
   .bp-pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--sky-glow); }
 
-  /* 30-DAY WALL CALENDAR SYSTEM */
-  .calendar-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-    margin-bottom: 16px;
+  /* CENTRED POPUP MODAL ARCHITECTURE */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(3, 2, 12, 0.85); z-index: 20000;
+    display: flex; justify-content: center; align-items: center; padding: 14px;
+    backdrop-filter: blur(8px);
+    animation: modalFadeIn 0.2s ease-out;
   }
-  .week-row-block {
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    background: rgba(255,255,255,0.015);
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
-  .week-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding-bottom: 8px;
+  .modal-content {
+    background: #ffffff; color: #0f172a; width: 100%; max-width: 850px; height: 86vh;
+    border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.7); border: 1px solid rgba(0,0,0,0.15);
+    position: relative; animation: modalZoomIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .week-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13.5px;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
+  @keyframes modalZoomIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
   }
-  .week-focus {
-    font-size: 11px;
-    color: #94a3b8;
-    margin: 0;
+  .modal-body-scroll {
+    overflow-y: auto; padding: 24px; text-align: left; background: #ffffff;
+    scrollbar-width: thin; scrollbar-color: #cbd5e1 #ffffff;
   }
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+  
+  /* VERTICAL ROADMAP GRAPH SYSTEM */
+  .vertical-timeline-framework {
+    position: relative; padding-left: 24px; margin-top: 10px; margin-bottom: 10px;
+    border-left: 2.5px solid #e2e8f0; text-align: left;
   }
-  @media (max-width: 900px) {
-    .calendar-grid { grid-template-columns: repeat(4, 1fr); }
+  .timeline-week-block {
+    position: relative; margin-bottom: 24px;
   }
-  @media (max-width: 600px) {
-    .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+  .timeline-node-dot {
+    position: absolute; left: -33.5px; top: 2px; width: 16px; height: 16px;
+    border-radius: 50%; background: #ffffff; border: 4px solid #A100FF; z-index: 10;
   }
-  @media (max-width: 400px) {
-    .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline-days-list {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;
   }
-
-  .calendar-day-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 6px;
-    min-height: 80px;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  @media (max-width: 640px) {
+    .timeline-days-list { grid-template-columns: 1fr; }
   }
-  .calendar-day-card:hover {
-    transform: translateY(-2px);
-    background: rgba(161, 0, 255, 0.04);
-    border-color: rgba(161, 0, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(161, 0, 255, 0.1);
+  .timeline-day-row {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 10px 12px; display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 10px; cursor: pointer; transition: all 0.2s ease;
   }
-  .day-badge {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  .timeline-day-row:hover {
+    background: #f1f5f9; border-color: #cbd5e1; transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
   }
-  .day-task-text {
-    font-size: 10.5px;
-    color: #cbd5e1;
-    line-height: 1.35;
-    margin: 0;
-    text-align: left;
+  .timeline-day-info {
+    font-family: 'Space Grotesk', sans-serif; font-size: 8px; font-weight: 900;
+    padding: 2px 5px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+    flex-shrink: 0; display: inline-block;
+  }
+  .timeline-day-text {
+    font-size: 10.5px; color: #334155; line-height: 1.35; margin: 0; text-align: left;
     flex-grow: 1;
-    transition: all 0.2s ease;
   }
-  .day-chk {
-    width: 12px;
-    height: 12px;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    transition: all 0.2s;
-    background: transparent;
-    flex-shrink: 0;
+  .timeline-day-chk {
+    width: 14px; height: 14px; border: 1.5px solid #cbd5e1; border-radius: 50%;
+    background: #ffffff; flex-shrink: 0; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
   }
-
-  /* Interactive state toggle */
-  .calendar-day-card.checked {
-    background: rgba(16, 185, 129, 0.06) !important;
-    border-color: rgba(16, 185, 129, 0.3) !important;
+  .timeline-day-row.checked {
+    background: #f0fdf4 !important; border-color: #bbf7d0 !important;
   }
-  .calendar-day-card.checked .day-task-text {
-    text-decoration: line-through #10b981 1.5px !important;
-    color: #64748b !important;
-    opacity: 0.6;
+  .timeline-day-row.checked .timeline-day-text {
+    text-decoration: line-through #22c55e 1.5px !important; color: #64748b !important; opacity: 0.7;
   }
-  .calendar-day-card.checked .day-chk {
-    background: #10b981;
-    border-color: #10b981;
-    box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+  .timeline-day-row.checked .timeline-day-chk {
+    background: #22c55e !important; border-color: #22c55e !important;
+  }
+  .timeline-day-row.checked .timeline-day-chk::after {
+    content: "✓"; color: #ffffff !important; font-size: 9px; font-weight: bold;
   }
 
   /* SAGES COUNCIL ROW */
@@ -748,151 +715,54 @@
 
   /* PRINT STYLE STACK override */
   @media print {
-    body {
-      background: #ffffff !important;
-      color: #000000 !important;
-    }
-    /* Hide ALL structural elements except scReveal and its blueprint-box */
-    .hud, .prog-timeline, .game-stage, .bottom-sheet, .actions-row, .cohort-join, .overlay-panel,
-    .welcome-screen, .intermission, #scStageGrid, #scIntermission, #scCinematic {
+    body { background: #ffffff !important; color: #000000 !important; }
+    /* Hide ALL screens and controls except raw printed area */
+    body > :not(#roadmapModal), .actions-row, .app-container, .screen, .hud, .prog-timeline {
       display: none !important;
     }
-    
-    /* Inside scReveal, hide EVERYTHING except the blueprint-box */
-    #scReveal > :not(.blueprint-box) {
+    #roadmapModal {
+      display: block !important; position: absolute !important; inset: 0 !important;
+      background: #ffffff !important; padding: 0 !important; backdrop-filter: none !important;
+    }
+    .modal-content {
+      width: 100% !important; max-width: 100% !important; height: auto !important; max-height: none !important;
+      box-shadow: none !important; border: none !important; border-radius: 0 !important;
+      background: #ffffff !important; overflow: visible !important;
+    }
+    .modal-header-bar, .no-print {
       display: none !important;
     }
-    
-    .app-container, .screen {
-      max-width: 100% !important;
-      width: 100% !important;
-      background: #ffffff !important;
-      color: #000000 !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      position: relative !important;
-      overflow: visible !important;
+    .modal-body-scroll {
+      overflow-y: visible !important; padding: 0 !important; background: #ffffff !important;
     }
-    
-    /* Make the calendar blueprint box beautiful and fill the page landscape-style */
-    .blueprint-box {
-      background: #ffffff !important;
-      border: 3px solid #000000 !important;
-      color: #000000 !important;
-      box-shadow: none !important;
-      padding: 18px !important;
-      margin: 0 !important;
-      border-radius: 12px !important;
-      width: 100% !important;
-      max-width: 100% !important;
+    .vertical-timeline-framework {
+      border-left: 2px solid #555555 !important; padding-left: 20px !important;
     }
-    
-    .bp-eyebrow {
-      color: #7500C0 !important;
-      font-weight: 900 !important;
+    .timeline-node-dot {
+      border: 3.5px solid #000000 !important; background: #ffffff !important; left: -26.5px !important;
+      width: 12px !important; height: 12px !important;
     }
-    .bp-header-lbl {
-      color: #000000 !important;
-      font-size: 20px !important;
-      font-weight: 1000 !important;
-      margin-bottom: 12px !important;
+    .timeline-day-row {
+      border: 1px solid #94a3b8 !important; background: #ffffff !important;
+      page-break-inside: avoid !important; box-shadow: none !important; transform: none !important;
     }
-    .bp-prog-bar {
-      border: 1.5px solid #000000 !important;
-      background: #f8fafc !important;
-      color: #000000 !important;
+    .timeline-day-text { color: #0f172a !important; }
+    .timeline-day-info { border: 1.5px solid #1e293b !important; background: #f1f5f9 !important; color: #1e293b !important; }
+    .timeline-day-chk { border: 1.5px solid #000000 !important; }
+    .timeline-day-row.checked {
+      background: #f1f5f9 !important; border-color: #475569 !important;
     }
-    .bp-prog-bar span {
-      color: #000000 !important;
+    .timeline-day-row.checked .timeline-day-text {
+      text-decoration: line-through !important; color: #64748b !important;
     }
-    .calendar-container {
-      gap: 12px !important;
+    .timeline-day-row.checked .timeline-day-chk {
+      background: #000000 !important; border-color: #000000 !important;
     }
-    .week-row-block {
-      background: #ffffff !important;
-      border: 1.5px solid #000000 !important;
-      color: #000000 !important;
-      padding: 10px 12px !important;
-      border-radius: 8px !important;
-      page-break-inside: avoid !important;
-    }
-    .week-header {
-      border-bottom: 1px solid #000000 !important;
-      padding-bottom: 6px !important;
-    }
-    .week-title {
-      color: #000000 !important;
-      font-size: 13px !important;
-      font-weight: 950 !important;
-    }
-    .week-focus {
-      color: #334155 !important;
-      font-size: 10px !important;
-    }
-    .calendar-grid {
-      grid-template-columns: repeat(7, 1fr) !important; /* Force true 7-day wall calendar width on paper! */
-      gap: 6px !important;
-      display: grid !important;
-    }
-    .calendar-day-card {
-      background: #ffffff !important;
-      border: 1.5px solid #000000 !important;
-      color: #000000 !important;
-      min-height: 80px !important;
-      border-radius: 6px !important;
-      padding: 6px 8px !important;
-      box-shadow: none !important;
-    }
-    .day-badge {
-      border-bottom: 1px solid #000000 !important;
-      padding-bottom: 3px !important;
-      margin-bottom: 4px !important;
-    }
-    .day-badge span {
-      color: #000000 !important;
-      font-size: 9px !important;
-      font-weight: 1000 !important;
-    }
-    .day-task-text {
-      color: #1e293b !important;
-      font-size: 8.5px !important;
-      line-height: 1.25 !important;
-    }
-    .day-chk {
-      border: 1px solid #000000 !important;
-      width: 10px !important;
-      height: 10px !important;
-    }
-    .calendar-day-card.checked {
-      background: #f1f5f9 !important;
-      border-color: #000000 !important;
-    }
-    .calendar-day-card.checked .day-task-text {
-      text-decoration: line-through !important;
-      color: #475569 !important;
-    }
-    .calendar-day-card.checked .day-chk {
-      background: #000000 !important;
-    }
-    .bp-outcome-box {
-      border: 1.5px solid #000000 !important;
-      background: #f8fafc !important;
-      color: #000000 !important;
-      margin-top: 8px !important;
-    }
-    .bp-outcome-box span {
-      color: #0f172a !important;
-    }
-    .bp-outcome-box h4 {
-      color: #000000 !important;
-      font-weight: 1000 !important;
-    }
-    .bp-outcome-box p {
-      color: #334155 !important;
+    .timeline-day-row.checked .timeline-day-chk::after {
+      color: #ffffff !important;
     }
     @page {
-      size: landscape; /* Request standard horizontal sheet print template automatically */
+      size: auto;
       margin: 0.6cm;
     }
   }
@@ -1493,23 +1363,25 @@
       <div id="councilRows"></div>
     </div>
 
-    <!-- Compact Success Blueprint Checklists (Zero text scroll bloating, bold and highly readable layout) -->
-    <div class="blueprint-box" style="background-color: var(--navy-card); border-color: rgba(255,255,255,0.06); padding: 14px; border-radius: 14px; margin-bottom: 12px;">
-      <div class="bp-eyebrow" style="font-size: 8px; font-weight: 900; color: var(--gold); letter-spacing: 1px; text-transform: uppercase;">30-DAY SUCCESS ROADMAP</div>
-      <h3 class="bp-header-lbl" id="bpLevelTitle" style="font-size: 15px; font-weight: 950; color: #fff; margin-bottom: 8px; letter-spacing: -0.2px;">Ascent Checklist</h3>
-      
-      <div class="bp-prog-bar" style="margin-bottom: 10px; padding: 6px 10px; border-radius: 8px; background: rgba(255,255,255,0.02)">
-        <span class="bp-prog-lbl" style="font-size: 10px; font-weight: 700; color: #cbd5e1;">Interactive Roadmap Checklist:</span>
-        <span class="bp-pct" id="bpCheckProgress" style="font-size: 11px; font-weight: 850; color: var(--sky-glow)">0% Complete</span>
+    <!-- Compact Success Blueprint Navigation Card -->
+    <div style="background-color: var(--navy-card); border: 1.5px solid rgba(255,255,255,0.06); padding: 18px; border-radius: 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(161,0,255,0.08); border: 1.5px solid rgba(161,0,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 0 10px rgba(161,0,255,0.15);">
+          🗺️
+        </div>
+        <div>
+          <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 950; color: #fff; margin: 0; letter-spacing: -0.1px;">Your Personalized 30-Day AI Blueprint</h3>
+          <p style="font-size: 11px; font-weight: 600; color: #cbd5e1; line-height: 1.4; margin-top: 3px;">Custom roadmap generated based on your archetype and maturity score.</p>
+        </div>
       </div>
-
-      <div class="weeks-scroll" id="bpWeeksWrapper" style="gap: 6px; margin-bottom: 12px; display: flex; flex-direction: column;"></div>
-
-      <!-- SAVINGS METRIC SUMMARY -->
-      <div class="bp-outcome-box" style="background: rgba(16,185,129,0.04); border-color: rgba(16,185,129,0.2); border-radius: 10px; padding: 8px 10px; margin-bottom: 0px; text-align: center;">
-        <span style="font-size: 8px; font-weight: 900; color: #34d399; letter-spacing: 1px; text-transform: uppercase;">ANNUAL DIVIDEND SCALE</span>
-        <h4 id="bpReclTitle" style="font-size: 14px; font-weight: 950; color: #fff; margin: 1px 0 2px;">260 Hours Saved!</h4>
-        <p id="bpReclSub" style="font-size: 11px; font-weight: 600; color: #94a3b8; line-height: 1.35; margin: 0;">Save up to 5 hours weekly, giving key bandwidth for executive directives.</p>
+      
+      <div style="display: flex; gap: 8px; width: 100%;">
+        <button class="action-btn" onclick="openRoadmapModal()" style="flex: 1; height: 42px; font-size: 12px; font-weight: 900; background: linear-gradient(135deg, #A100FF 0%, #7500C0 100%); border: none; border-radius: 10px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(161,0,255,0.3); font-family: 'Inter', sans-serif;">
+          👁️ View My Roadmap
+        </button>
+        <button class="action-btn" onclick="triggerRoadmapPrint()" style="flex: 1; height: 42px; font-size: 12px; font-weight: 950; background: rgba(255,255,255,0.02); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 10px; color: #e2e8f0; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Inter', sans-serif;">
+          📥 Download PDF
+        </button>
       </div>
     </div>
     
@@ -1568,6 +1440,58 @@
     <button class="action-btn" onclick="location.reload()" style="background:transparent; color:#94a3b8; border:1px solid rgba(255,255,255,0.15); box-shadow:none; margin-bottom:12px;">Restart Voyage ⛰️</button>
   </div>
 
+</div>
+
+<!-- CENTRED ROADMAP POPUP MODAL (HIGH FIDELITY PORTRAIT) -->
+<div id="roadmapModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    
+    <!-- Modal Header (Controls) -->
+    <div class="modal-header-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1.5px solid #e2e8f0; background: #f8fafc; flex-shrink: 0; box-sizing: border-box;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 18px;">📋</span>
+        <h3 id="bpLevelTitle" style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 1000; color: #0f172a; margin: 0;">30-Day Executive AI Roadmap</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="no-print" onclick="triggerRoadmapPrint()" style="padding: 6px 14px; font-size: 11px; font-weight: 850; border-radius: 8px; border: none; background: #A100FF; color: #ffffff; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 4px 10px rgba(161,0,255,0.25); font-family: 'Inter', sans-serif;">
+          🖨️ Print / Save PDF
+        </button>
+        <button class="no-print" onclick="closeRoadmapModal()" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #cbd5e1; background: #ffffff; color: #475569; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: sans-serif;">
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body (Printable content area) -->
+    <div id="modalPrintArea" class="modal-body-scroll">
+      
+      <!-- Top Overview Banner (Optimized for Printing with high contrast) -->
+      <div style="border-bottom: 2px solid #0f172a; padding-bottom: 14px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <span style="font-size: 8px; font-weight: 900; color: #A100FF; letter-spacing: 1.5px; text-transform: uppercase;">CONFIDENTIAL STRATEGIC PLAN</span>
+          <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 1000; color: #0f172a; margin: 2px 0 4px;">My Personalized AI Ascent Roadmap</h1>
+          <p style="font-size: 11px; color: #334155; margin: 0; font-weight: 700; line-height: 1.45;">Prepared for delegate <b id="roadmapDelName" style="color: #0f172a;">Executive</b> to automate division latency chokepoints and optimize operational runtimes based on maturity and archetype scale.</p>
+        </div>
+        <div style="text-align: right; border-left: 2px solid #e2e8f0; padding-left: 14px; flex-shrink: 0;">
+          <div style="font-size: 8.5px; font-weight: 900; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase;">ANNUAL DIVIDEND</div>
+          <div id="bpReclTitle" style="font-size: 16px; font-weight: 1000; color: #059669; margin: 1px 0;">260 Hours Saved!</div>
+          <div id="bpReclSub" style="font-size: 9px; font-weight: 600; color: #475569; max-width: 210px; line-height: 1.3;">Save up to 5 hours weekly, giving key bandwidth for strategic directives.</div>
+        </div>
+      </div>
+
+      <!-- Interactive Progress Overlay -->
+      <div class="bp-prog-bar no-print" style="margin-bottom: 16px; padding: 10px 14px; border: 1.5px solid #e2e8f0; background: #f8fafc; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <span class="bp-prog-lbl" style="font-size: 11px; font-weight: bold; color: #334155;">Interactive Roadmap Progress:</span>
+        <span class="bp-pct" id="bpCheckProgress" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 950; color: #A100FF;">0% Complete</span>
+      </div>
+
+      <!-- VERTICAL TIMELINE ROADMAP CHECKLISTS -->
+      <div class="weeks-scroll" id="bpWeeksWrapper">
+        <!-- Re-populated in real-time in JS via buildInteractiveSuccessTimeline -->
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <!-- PLAY CODE SCRIPT engine -->
@@ -3526,40 +3450,39 @@
       }
     ];
 
-    let plannerHtml = `<div class="calendar-container">`;
+    let plannerHtml = `<div class="vertical-timeline-framework">`;
 
     weeks.forEach(w => {
       plannerHtml += `
-        <div class="week-row-block">
-          <div class="week-header">
-            <h4 class="week-title" style="font-family: 'Space Grotesk', sans-serif;">${w.title}</h4>
-            <p class="week-focus">${w.focus}</p>
+        <div class="timeline-week-block">
+          <div class="timeline-node-dot"></div>
+          <div style="margin-left: 12px; margin-bottom: 8px;">
+            <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 13.5px; font-weight: 900; color: #1e293b; margin: 0;">${w.title}</h4>
+            <p style="font-size: 11px; color: #64748b; margin: 3px 0 0; line-height: 1.45;">${w.focus}</p>
           </div>
-          <div class="calendar-grid">
+          <div class="timeline-days-list">
       `;
 
       w.days.forEach(day => {
         const taskText = dayTasks[day - 1];
         const isHighlight = day === 29 || day === 30;
         
-        let colorAccent = "var(--sky-glow)";
-        if (day === 29) colorAccent = "var(--gold)";
-        if (day === 30) colorAccent = "var(--emerald)";
-        if (day >= 8 && day <= 14) colorAccent = "var(--gold)";
-        if (day >= 15 && day <= 21) colorAccent = "#d84cff";
-        if (day >= 22 && day <= 28) colorAccent = "#A100FF";
+        let colorAccent = "#A100FF"; // default
+        if (day === 29) colorAccent = "#f59e0b"; // gold
+        if (day === 30) colorAccent = "#10b981"; // emerald
+        if (day >= 8 && day <= 14) colorAccent = "#b45309"; // warm gold
+        if (day >= 15 && day <= 21) colorAccent = "#ec4899"; // pink
+        if (day >= 22 && day <= 28) colorAccent = "#8b5cf6"; // violet
 
-        const cardStyle = isHighlight 
-          ? `border: 1.5px solid ${colorAccent}; background: rgba(255,255,255,0.01); box-shadow: 0 0 10px rgba(16,185,129,0.03);` 
-          : `border-left: 3px solid ${colorAccent};`;
+        const cardStyle = `border-left: 3.5px solid ${colorAccent};`;
 
         plannerHtml += `
-          <div class="calendar-day-card bp-item" onclick="toggleWeekTaskCheck(this)" style="${cardStyle}">
-            <div class="day-badge">
-              <span style="color: ${colorAccent}; font-family: 'Space Grotesk', sans-serif; font-size: 8px; font-weight: 900; letter-spacing: 0.5px;">DAY ${day < 10 ? '0' + day : day}</span>
-              <div class="day-chk"></div>
+          <div class="timeline-day-row bp-item" onclick="toggleWeekTaskCheck(this)" style="${cardStyle}">
+            <div style="display: flex; align-items: flex-start; gap: 8px; flex: 1;">
+              <span class="timeline-day-info" style="color: ${colorAccent}; background: ${colorAccent}15;">Day ${day < 10 ? '0' + day : day}</span>
+              <p class="timeline-day-text">${taskText}</p>
             </div>
-            <p class="day-task-text" style="margin-top: 2px;">${taskText}</p>
+            <div class="timeline-day-chk"></div>
           </div>
         `;
       });
@@ -3581,6 +3504,33 @@
     const yearlyHours = hrs * 52;
     document.getElementById("bpReclTitle").textContent = `${yearlyHours} Hours Saved / Year!`;
     document.getElementById("bpReclSub").innerHTML = `Targeting saving of <b>${hrs} hours weekly</b> on timewastes. This reclaims <b>${yearlyHours} hours annually</b> to invest in strategic department priorities.`;
+  }
+
+  // MODAL TRIGGER CONTROLS
+  function openRoadmapModal() {
+    soundEngine.play('click');
+    const modal = document.getElementById("roadmapModal");
+    if (modal) {
+      modal.style.display = "flex";
+      // Personalize delegate name inside the modal instantly
+      const nameEl = document.getElementById("roadmapDelName");
+      if (nameEl) {
+        nameEl.textContent = state.userName || "Executive Delegate";
+      }
+    }
+  }
+
+  function closeRoadmapModal() {
+    soundEngine.play('click');
+    const modal = document.getElementById("roadmapModal");
+    if (modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function triggerRoadmapPrint() {
+    soundEngine.play('click');
+    window.print();
   }
 
   function toggleWeekTaskCheck(el) {
